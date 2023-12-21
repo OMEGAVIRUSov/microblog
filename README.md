@@ -15,3 +15,12 @@ https://docs.google.com/document/d/1s1lZPfJkYlS9jKOayLnylutonyocKSubDmtWVpAiYg4/
 
 what needs done overall
 https://docs.google.com/spreadsheets/d/1nvc8FzwGMOGzCe2UAwmhxFHUouhdPGR7u0OXrrJzudI/edit#gid=0
+
+
+Mockups:
+
+Posts Page
+https://docs.google.com/drawings/d/1h75efdmObnE27gxk_ZRG_6DuLnoeDIxd0mNUzeUIfk0/edit
+
+Create Posts Sub Page
+https://docs.google.com/drawings/d/1PVtzqjF_fkJt9FgucoOuU2fwDWvOXAVtzZiRKWU1r5I/edit?usp=sharing
