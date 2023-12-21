@@ -74,7 +74,7 @@
         border-radius: 15px;
         margin: 1rem;
       }
-      #username {
+      #username, #fullName {
         width: 20%;
         height: 3rem;
         border: 2px solid #85989aff;
@@ -119,6 +119,7 @@
       <div class="user-info-container">
         <div class="user-info">
           <p id="username">(username)</p>
+          <p id="fullName">(full name)</p>
           <p id="bio">(bio)</p>
 
           <div class="user-posts-container">
@@ -136,6 +137,9 @@
 
       function init() {
         //html elements
+        const usernameP = document.querySelector("#username");
+        const fullNameP = document.querySelector("#fullName");
+        const bioP = document.querySelector("#bio");
 
         //functions
         //check for authentication, if none, redirect to login page
@@ -164,11 +168,15 @@
             .then((response) => response.json())
             .then((data) => {
               console.log(data);
-              //do something
+              displayUserInfo(data);
             });
         }
 
-        function displayUserInfo() {}
+        function displayUserInfo(user) {
+            usernameP.innerText = user.username;
+            fullNameP.innerText = user.fullName;
+            bioP.innerText = user.bio;
+        }
 
         //function calls for window onload
         getUserInfo();
