@@ -1,147 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        body {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            background-color: #85989aff;
-            overflow-y: hidden;
-        }
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        background-color: #85989aff;
+        overflow-y: hidden;
+      }
 
-        body::-webkit-scrollbar {
-            background-color: transparent;
-            width: 0px;
-        }
+      body::-webkit-scrollbar {
+        background-color: transparent;
+        width: 0px;
+      }
 
-        .main {
-            width: 90%;
-            height: 100%;
-            margin: 0px;
-            padding: 0px;
-            overflow-y: scroll;
-        }
+      .main {
+        width: 90%;
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        overflow-y: scroll;
+      }
 
-        .main::-webkit-scrollbar {
-            background-color: transparent;
-            width: 0px;
-        }
-        .nav {
-            width: 10%;
-            height: 100%;
-            border-right: 2px solid white;
-            margin: 0px;
-            padding: 0px;
-        }
+      .main::-webkit-scrollbar {
+        background-color: transparent;
+        width: 0px;
+      }
+      .nav {
+        width: 10%;
+        height: 100%;
+        border-right: 2px solid white;
+        margin: 0px;
+        padding: 0px;
+      }
 
-        .banner {
-            height: 25rem;
-            width: 100%;
-            background-color: gray;
-            display: flex;
-            align-items: center;
-        }
-        .user-info-container {
-            height: auto;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .user-info {
-            width: 80%;
-            height: auto;
-            background-color: white;
-        }
+      .banner {
+        height: 25rem;
+        width: 100%;
+        background-color: gray;
+        display: flex;
+        align-items: center;
+      }
+      .user-info-container {
+        height: auto;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .user-info {
+        width: 80%;
+        height: auto;
+        background-color: white;
+      }
 
-        .pfp {
-            width: 20rem;
-            height: 20rem;
-            border: 4px solid black;
-            border-radius: 500px;
-            margin-left: 10rem;
-            margin-top: 3rem;
-        }
+      .pfp {
+        width: 20rem;
+        height: 20rem;
+        border: 4px solid black;
+        border-radius: 500px;
+        margin-left: 10rem;
+        margin-top: 3rem;
+      }
 
-        #bio {
-            width: 50%;
-            height: 10rem;
-            border: 2px solid #85989aff;
-            border-radius: 15px;
-            margin: 1rem;
-        }
-        #username {
-            width: 20%;
-            height: 3rem;
-            border: 2px solid #85989aff;
-            border-radius: 50px;
-            margin: 1rem;
-            text-align: center;
-        }
+      #bio {
+        width: 50%;
+        height: 10rem;
+        border: 2px solid #85989aff;
+        border-radius: 15px;
+        margin: 1rem;
+      }
+      #username {
+        width: 20%;
+        height: 3rem;
+        border: 2px solid #85989aff;
+        border-radius: 50px;
+        margin: 1rem;
+        text-align: center;
+      }
 
-        .user-posts-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 5rem;
-        }
+      .user-posts-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 5rem;
+      }
 
-        .post {
-            width: 97%;
-            height: 15rem;
-            border-radius: 25px;
-            border-top-left-radius: 150px;
-            border-bottom-left-radius: 150px;
-            border: 2px solid #85989aff;
-            margin: 1rem;
-        }
+      .post {
+        width: 97%;
+        height: 15rem;
+        border-radius: 25px;
+        border-top-left-radius: 150px;
+        border-bottom-left-radius: 150px;
+        border: 2px solid #85989aff;
+        margin: 1rem;
+      }
     </style>
-</head>
-<body>
+    <!-- Run BEFORE page is finished loading (before window.onload): -->
+    <script src="../account/auth.js"></script>
+    <script>
+      if (isLoggedIn() === false) {
+        window.location.replace("../account/login.html");
+      }
+    </script>
+  </head>
+  <body>
     <div class="nav">
-        <a href="posts\posts.html">Posts</a>
+      <a href="posts\posts.html">Posts</a>
     </div>
     <div class="main">
-        <div class="banner">
-            <img class="pfp" src="https://placehold.co/500x500">
-        </div>
-        <div class="user-info-container">
-            <div class="user-info">
-                <p id="username">(username)</p>
-                <p id="bio">(bio)</p>
+      <div class="banner">
+        <img class="pfp" src="https://placehold.co/500x500" />
+      </div>
+      <div class="user-info-container">
+        <div class="user-info">
+          <p id="username">(username)</p>
+          <p id="bio">(bio)</p>
 
-                <div class="user-posts-container">
-                    <div class="post">
-                        
-                    </div>
-                    <div class="post">
-                        
-                    </div>
-                    <div class="post">
-                        
-                    </div>
-                    <div class="post">
-                        
-                    </div>
-                    <div class="post">
-                        
-                    </div>
-                </div>
-            </div>
-            
+          <div class="user-posts-container">
+            <div class="post"></div>
+            <div class="post"></div>
+            <div class="post"></div>
+            <div class="post"></div>
+            <div class="post"></div>
+          </div>
         </div>
-        
+      </div>
     </div>
-    <!-- <script>
-        fetch("http://microbloglite.us-east-2.elasticbeanstalk.com/api/users")
-        .then(response => response.json())
-        .then(data => {
-            alert(JSON.stringify(data));
-        })
-    </script> -->
-</body>
+    <script>
+      "use strict";
+
+      function init() {
+        //html elements
+
+        //functions
+        //check for authentication, if none, redirect to login page
+
+        function getUserName() {
+          let userData = getLoginData();
+
+          return userData.username;
+        }
+
+        function getToken() {
+          let userData = getLoginData();
+
+          return userData.token;
+        }
+
+        function getUserInfo() {
+          const userName = getUserName();
+          const token = getToken();
+
+          fetch(`${apiBaseURL}/api/users/${userName}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              //do something
+            });
+        }
+
+        function displayUserInfo() {}
+
+        //function calls for window onload
+        getUserInfo();
+
+        //add event listeners
+      }
+
+      window.onload = init;
+    </script>
+  </body>
 </html>
