@@ -10,23 +10,43 @@
 
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="index.css" />
+    <style>
+      form {
+        max-width: 8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    </style>
 
     <title>Login to the Microblog Network!</title>
   </head>
   <body>
     <header>
-      <nav>
-        
-      </nav>
+      <nav></nav>
     </header>
 
     <main>
       <h1>Register</h1>
+      <div class="fieldset">
+        <form>
+          <label for="user-name-input">Username: </label>
+          <input id="user-name-input" type="text" />
+
+          <label for="name-input">Name: </label>
+          <input id="name-input" type="text" />
+
+          <label for="password-input">Password: </label>
+          <input id="password-input" type="text" />
+
+          <button type="button" id="submit-button">Submit</button>
+        </form>
+      </div>
     </main>
 
     <footer></footer>
 
     <!-- Page-specific code -->
-    <script src="index.js"></script>
+    <script src="register.js"></script>
   </body>
 </html>
