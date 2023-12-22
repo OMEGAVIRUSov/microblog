@@ -123,72 +123,18 @@
           <p id="fullName"></p>
           <p id="bio"></p>
 
+          <button id="show-new-post-button">Create Post</button>
+          <button id="cancel-post-button">Cancel</button>
+          <textarea name="new-post" id="new-post-textarea" cols="30" rows="10"></textarea>
+          <button id="create-post-button">Post</button>
+
           <div class="user-posts-container">
-            <div class="post"></div>
-            <div class="post"></div>
-            <div class="post"></div>
-            <div class="post"></div>
-            <div class="post"></div>
+
           </div>
         </div>
       </div>
     </div>
-    <script>
-      "use strict";
-
-      function init() {
-        //html elements
-        const usernameP = document.querySelector("#username");
-        const fullNameP = document.querySelector("#fullName");
-        const bioP = document.querySelector("#bio");
-        const logOutButton = document.querySelector("#log-out-button");
-
-        //functions
-        //check for authentication, if none, redirect to login page
-
-        function getUserName() {
-          let userData = getLoginData();
-
-          return userData.username;
-        }
-
-        function getToken() {
-          let userData = getLoginData();
-
-            console.log(userData);
-          return userData.token;
-        }
-
-        function getUserInfo() {
-          const userName = getUserName();
-          const token = getToken();
-
-          fetch(`${apiBaseURL}/api/users/${userName}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              displayUserInfo(data);
-            });
-        }
-
-        function displayUserInfo(user) {
-            usernameP.innerText = user.username;
-            fullNameP.innerText = user.fullName;
-            bioP.innerText = user.bio;
-        }
-
-        //function calls for window onload
-        getUserInfo();
-
-        //add event listeners
-        logOutButton.addEventListener("click", logout)
-      }
-
-      window.onload = init;
-    </script>
+    <script src="posts/posts.js"></script>
+    <script src="profile.js"></script>
   </body>
 </html>
