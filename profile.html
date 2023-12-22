@@ -111,6 +111,7 @@
   <body>
     <div class="nav">
       <a href="posts\posts.html">Posts</a>
+      <button id="log-out-button">Logout</button>
     </div>
     <div class="main">
       <div class="banner">
@@ -118,9 +119,9 @@
       </div>
       <div class="user-info-container">
         <div class="user-info">
-          <p id="username">(username)</p>
-          <p id="fullName">(full name)</p>
-          <p id="bio">(bio)</p>
+          <p id="username"></p>
+          <p id="fullName"></p>
+          <p id="bio"></p>
 
           <div class="user-posts-container">
             <div class="post"></div>
@@ -140,6 +141,7 @@
         const usernameP = document.querySelector("#username");
         const fullNameP = document.querySelector("#fullName");
         const bioP = document.querySelector("#bio");
+        const logOutButton = document.querySelector("#log-out-button");
 
         //functions
         //check for authentication, if none, redirect to login page
@@ -153,6 +155,7 @@
         function getToken() {
           let userData = getLoginData();
 
+            console.log(userData);
           return userData.token;
         }
 
@@ -182,6 +185,7 @@
         getUserInfo();
 
         //add event listeners
+        logOutButton.addEventListener("click", logout)
       }
 
       window.onload = init;
