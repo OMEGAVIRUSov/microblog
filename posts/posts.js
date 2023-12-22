@@ -3,15 +3,51 @@
 "use strict";
 
 function init() {
-//get HTML
-const logOutButton = document.querySelector("#log-out-button");
+  //get HTML
+  const logOutButton = document.querySelector("#log-out-button");
+  const postsDiv = document.querySelector("#postsDiv");
 
-//functions
+  //functions
+  function getUserName() {
+    let userData = getLoginData();
 
-//event listeners
+    return userData.username;
+  }
 
-//call functions onload
-logOutButton.addEventListener("click", logout)
+  function getToken() {
+    let userData = getLoginData();
+
+      console.log(userData);
+    return userData.token;
+  }
+
+  function displayPost(post) {
+    
+  }
+
+  function loadPosts() {
+    // const userName = getUserName();
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/posts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        for(let post of data) {
+            displayPost(post);
+        }
+      });
+  }
+
+  //event listeners
+  logOutButton.addEventListener("click", logout);
+
+  //call functions onload
+  loadPosts();
 }
 
 window.onload = init;
