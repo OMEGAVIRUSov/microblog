@@ -1,1 +1,20 @@
 /* Posts Page CSS */
+
+.post {
+    width: 97%;
+    height: 15rem;
+    border-radius: 25px;
+    border-top-left-radius: 150px;
+    border-bottom-left-radius: 150px;
+    border: 2px solid #85989aff;
+    margin: 1rem;
+    
+    padding: 1rem 4rem 1rem 4rem;
+  }
+
+  .user-posts-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5rem;
+  }

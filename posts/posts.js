@@ -5,7 +5,7 @@
 function init() {
   //get HTML
   const logOutButton = document.querySelector("#log-out-button");
-  const postsDiv = document.querySelector("#postsDiv");
+  const postsDiv = document.querySelector("#posts-div");
 
   //functions
   function getUserName() {
@@ -22,7 +22,19 @@ function init() {
   }
 
   function displayPost(post) {
-    
+    const postDiv = document.createElement("div");
+    const usernameH4 = document.createElement("h4");
+    const textP = document.createElement("p");
+
+    usernameH4.innerText = `${post.username}:`;
+    textP.innerText = post.text;
+
+    postDiv.appendChild(usernameH4);
+    postDiv.appendChild(textP);
+
+    postDiv.classList.add("post");
+
+    postsDiv.appendChild(postDiv);
   }
 
   function loadPosts() {
