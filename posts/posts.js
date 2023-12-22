@@ -3,15 +3,63 @@
 "use strict";
 
 function init() {
-//get HTML
-const logOutButton = document.querySelector("#log-out-button");
+  //get HTML
+  const logOutButton = document.querySelector("#log-out-button");
+  const postsDiv = document.querySelector("#posts-div");
 
-//functions
+  //functions
+  function getUserName() {
+    let userData = getLoginData();
 
-//event listeners
+    return userData.username;
+  }
 
-//call functions onload
-logOutButton.addEventListener("click", logout)
+  function getToken() {
+    let userData = getLoginData();
+
+      console.log(userData);
+    return userData.token;
+  }
+
+  function displayPost(post) {
+    const postDiv = document.createElement("div");
+    const usernameH4 = document.createElement("h4");
+    const textP = document.createElement("p");
+
+    usernameH4.innerText = `${post.username}:`;
+    textP.innerText = post.text;
+
+    postDiv.appendChild(usernameH4);
+    postDiv.appendChild(textP);
+
+    postDiv.classList.add("post");
+
+    postsDiv.appendChild(postDiv);
+  }
+
+  function loadPosts() {
+    // const userName = getUserName();
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/posts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        for(let post of data) {
+            displayPost(post);
+        }
+      });
+  }
+
+  //event listeners
+  logOutButton.addEventListener("click", logout);
+
+  //call functions onload
+  loadPosts();
 }
 
 window.onload = init;
