@@ -7,6 +7,8 @@ function init() {
   const bioP = document.querySelector("#bio");
   const logOutButton = document.querySelector("#log-out-button");
 
+  const postsDiv = document.querySelector("#posts-div");
+
   const showNewPostButton = document.querySelector("#show-new-post-button");
   const cancelPostButton = document.querySelector("#canel-post-button");
   const newPostTextarea = document.querySelector("#new-post-textarea");
@@ -49,7 +51,7 @@ function init() {
   }
 
   //show posts functions
-  function displayPost(post) {
+  function buildPost(post) {
     const postDiv = document.createElement("div");
     const usernameH4 = document.createElement("h4");
     const textP = document.createElement("p");
@@ -62,7 +64,19 @@ function init() {
 
     postDiv.classList.add("post");
 
+    return postDiv;
+  }
+
+  function displayPost(post) {
+    const postDiv = buildPost(post);
+
     postsDiv.appendChild(postDiv);
+  }
+
+  function displayPostFirst(post) {
+    const postDiv = buildPost(post);
+
+    postsDiv.prepend(postDiv);
   }
 
   function loadUserPosts() {
@@ -85,7 +99,31 @@ function init() {
   }
 
   //create post functions
-  function createPost() {}
+  function createPost() {
+    const post = {
+        "text": newPostTextarea.value,
+    }
+
+    savePost(post);
+  }
+
+  function savePost(post) {
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+
+      },
+      body: JSON.stringify(post),
+    }).then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        displayPostFirst(data);
+    });
+  }
 
   //function calls for window onload
   getUserInfo();
