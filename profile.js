@@ -49,6 +49,22 @@ function init() {
   }
 
   //show posts functions
+  function displayPost(post) {
+    const postDiv = document.createElement("div");
+    const usernameH4 = document.createElement("h4");
+    const textP = document.createElement("p");
+
+    usernameH4.innerText = `${post.username}:`;
+    textP.innerText = post.text;
+
+    postDiv.appendChild(usernameH4);
+    postDiv.appendChild(textP);
+
+    postDiv.classList.add("post");
+
+    postsDiv.appendChild(postDiv);
+  }
+
   function loadUserPosts() {
     const userName = getUserName();
     const token = getToken();
@@ -60,7 +76,6 @@ function init() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         for (let post of data) {
           if (userName == post.username) {
             displayPost(post);
@@ -70,9 +85,7 @@ function init() {
   }
 
   //create post functions
-  function createPost() {
-
-  }
+  function createPost() {}
 
   //function calls for window onload
   getUserInfo();
