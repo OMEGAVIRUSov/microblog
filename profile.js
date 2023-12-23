@@ -10,7 +10,7 @@ function init() {
   const postsDiv = document.querySelector("#posts-div");
 
   const showNewPostButton = document.querySelector("#show-new-post-button");
-  const cancelPostButton = document.querySelector("#canel-post-button");
+  const cancelPostButton = document.querySelector("#cancel-post-button");
   const newPostTextarea = document.querySelector("#new-post-textarea");
   const createPostButton = document.querySelector("#create-post-button");
 
@@ -98,11 +98,31 @@ function init() {
       });
   }
 
+  //toggle Create Post functions
+  function clearTextarea() {
+    newPostTextarea.value = "";
+  }
+
+  function showTextarea() {
+    showNewPostButton.style.display = "none";
+    cancelPostButton.style.display = "block";
+    newPostTextarea.style.display = "block";
+    createPostButton.style.display = "block"
+  }
+
+  function hideTextarea () {
+    clearTextarea();
+    showNewPostButton.style.display = "block";
+    cancelPostButton.style.display = "none";
+    newPostTextarea.style.display = "none";
+    createPostButton.style.display = "none"
+  }
+
   //create post functions
   function createPost() {
     const post = {
-        "text": newPostTextarea.value,
-    }
+      text: newPostTextarea.value,
+    };
 
     savePost(post);
   }
@@ -115,14 +135,14 @@ function init() {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-
       },
       body: JSON.stringify(post),
-    }).then((response) => response.json())
-    .then((data) => {
+    })
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
         displayPostFirst(data);
-    });
+      });
   }
 
   //function calls for window onload
@@ -132,6 +152,8 @@ function init() {
   //add event listeners
   logOutButton.addEventListener("click", logout);
   createPostButton.addEventListener("click", createPost);
+  showNewPostButton.addEventListener("click", showTextarea);
+  cancelPostButton.addEventListener("click", hideTextarea)
 }
 
 window.onload = init;
