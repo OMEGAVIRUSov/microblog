@@ -124,6 +124,8 @@ function init() {
       text: newPostTextarea.value,
     };
 
+    clearTextarea();
+
     savePost(post);
   }
 
