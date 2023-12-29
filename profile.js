@@ -14,6 +14,16 @@ function init() {
   const newPostTextarea = document.querySelector("#new-post-textarea");
   const createPostButton = document.querySelector("#create-post-button");
 
+  const userInfo = document.querySelector("#user-info");
+  const editUserInfo = document.querySelector("#edit-user-info");
+  const saveUserInfoButton = document.querySelector("#save-user-info-button");
+
+  const usernameInput = document.querySelector("#username-input");
+  const fullNameInput = document.querySelector("#name-input");
+  const bioTextarea = document.querySelector("#bio-textarea");
+
+
+
   //functions
   function getUserName() {
     let userData = getLoginData();
@@ -145,6 +155,42 @@ function init() {
         console.log(data);
         displayPostFirst(data);
       });
+  }
+
+  //edit user information functions
+  function resetEditForm() {
+
+  }
+
+  function buildUser() {
+    let user = {
+      username: usernameInput.value,
+      fullName: nameInput.value,
+      password: passwordInput.value,
+    };
+
+    return user;
+  }
+
+  async function saveUser(user) {
+    fetch(apiBaseURL + "/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        //can set multiple headers here
+      },
+      body: JSON.stringify(user),
+    }).then((response) => {
+      window.location.href = "login.html";
+    });
+  }
+
+  async function createUser() {
+    let user = buildUser();
+
+    saveUser(user);
+
+    return false;
   }
 
   //function calls for window onload
