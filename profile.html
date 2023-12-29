@@ -74,7 +74,8 @@
         border-radius: 15px;
         margin: 1rem;
       }
-      #username, #fullName {
+      #username,
+      #fullName {
         width: 20%;
         height: 3rem;
         border: 2px solid #85989aff;
@@ -101,6 +102,13 @@
 
         padding: 1rem 4rem 1rem 4rem;
       }
+
+      #edit-form {
+        display: flex;
+        flex-direction: column;
+        width: 20%;
+      }
+
     </style>
     <!-- Run BEFORE page is finished loading (before window.onload): -->
     <script src="../account/auth.js"></script>
@@ -121,18 +129,36 @@
       </div>
       <div class="user-info-container">
         <div class="user-info">
-          <p id="username"></p>
-          <p id="fullName"></p>
-          <p id="bio"></p>
+          <button id="edit-button">Edit</button>
+          <button id="cancel-edit-button">Cancel</button>
+
+          <div id="edit-user-info">
+            <form id="edit-form">
+              <label for="username-input">Username:</label>
+              <input type="text" id="username-input">
+
+              <label for="name-input">Full Name:</label>
+              <input type="text" id="name-input">
+
+              <label for="bio-textarea">Bio:</label>
+              <textarea name="" id="bio-textarea" cols="30" rows="10"></textarea>
+
+              <button id="save-user-info-button" type="button">Save Changes</button>
+            </form>
+          </div>
+          
+          <div id="user-info">
+            <p id="username"></p>
+            <p id="fullName"></p>
+            <p id="bio"></p>
+          </div>
 
           <button id="show-new-post-button">Create Post</button>
-          <button id="cancel-post-button" style="display: none;">Cancel</button>
-          <textarea name="new-post" id="new-post-textarea" cols="30" rows="10" style="display: none;"></textarea>
-          <button id="create-post-button" style="display: none;">Post</button>
+          <button id="cancel-post-button" style="display: none">Cancel</button>
+          <textarea name="new-post" id="new-post-textarea" cols="30" rows="10" style="display: none"></textarea>
+          <button id="create-post-button" style="display: none">Post</button>
 
-          <div id="posts-div" class="user-posts-container">
-
-          </div>
+          <div id="posts-div" class="user-posts-container"></div>
         </div>
       </div>
     </div>
