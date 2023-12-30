@@ -14,15 +14,16 @@ function init() {
   const newPostTextarea = document.querySelector("#new-post-textarea");
   const createPostButton = document.querySelector("#create-post-button");
 
-  const userInfo = document.querySelector("#user-info");
-  const editUserInfo = document.querySelector("#edit-user-info");
+  const editButton = document.querySelector("#edit-button");
+  const cancelEditButton = document.querySelector("#cancel-edit-button");
+  const userInfoDiv = document.querySelector("#user-info-div");
+  const editUserInfoDiv = document.querySelector("#edit-user-info-div");
   const saveUserInfoButton = document.querySelector("#save-user-info-button");
 
-  const usernameInput = document.querySelector("#username-input");
+  const usernameDisplayP = document.querySelector("#username-display-p");
   const fullNameInput = document.querySelector("#name-input");
   const bioTextarea = document.querySelector("#bio-textarea");
-
-
+  const passwordInput = document.querySelector("#password-input");
 
   //functions
   function getUserName() {
@@ -38,7 +39,7 @@ function init() {
     return userData.token;
   }
 
-  function getUserInfo() {
+  function getUserInfoToDisplay() {
     const userName = getUserName();
     const token = getToken();
 
@@ -117,15 +118,15 @@ function init() {
     showNewPostButton.style.display = "none";
     cancelPostButton.style.display = "block";
     newPostTextarea.style.display = "block";
-    createPostButton.style.display = "block"
+    createPostButton.style.display = "block";
   }
 
-  function hideTextarea () {
+  function hideTextarea() {
     clearTextarea();
     showNewPostButton.style.display = "block";
     cancelPostButton.style.display = "none";
     newPostTextarea.style.display = "none";
-    createPostButton.style.display = "none"
+    createPostButton.style.display = "none";
   }
 
   //create post functions
@@ -158,50 +159,90 @@ function init() {
   }
 
   //edit user information functions
-  function resetEditForm() {
+  function populateEditForm(user) {
+    usernameDisplayP.innerText = user.username;
+    fullNameInput.value = user.fullName;
+    bioTextarea.value = user.bio;
+    passwordInput.value = "";
+  }
 
+  function getUserInfoToEdit() {
+    const userName = getUserName();
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/users/${userName}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        populateEditForm(data);
+      });
+  }
+
+  //toggle
+  function showEditUserInfo() {
+    getUserInfoToEdit();
+
+    userInfoDiv.style.display = "none";
+    editButton.style.display = "none";
+
+    cancelEditButton.style.display = "block";
+    editUserInfoDiv.style.display = "block";
+  }
+
+  function hideEditUserInfo() {
+    cancelEditButton.style.display = "none";
+    editUserInfoDiv.style.display = "none";
+
+    userInfoDiv.style.display = "block";
+    editButton.style.display = "block";
   }
 
   function buildUser() {
     let user = {
-      username: usernameInput.value,
-      fullName: nameInput.value,
       password: passwordInput.value,
+      bio: bioTextarea.value,
+      fullName: fullNameInput.value,
     };
 
     return user;
   }
 
-  async function saveUser(user) {
-    fetch(apiBaseURL + "/api/users", {
-      method: "POST",
+  async function updateUser() {
+    const user = buildUser();
+    const token = getToken();
+
+    fetch(apiBaseURL + "/api/users/" + getUserName(), {
+      method: "PUT",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        //can set multiple headers here
       },
       body: JSON.stringify(user),
-    }).then((response) => {
-      window.location.href = "login.html";
-    });
-  }
-
-  async function createUser() {
-    let user = buildUser();
-
-    saveUser(user);
-
-    return false;
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        hideEditUserInfo();
+        displayUserInfo(data);
+      });
   }
 
   //function calls for window onload
-  getUserInfo();
+  getUserInfoToDisplay();
   loadUserPosts();
 
   //add event listeners
   logOutButton.addEventListener("click", logout);
   createPostButton.addEventListener("click", createPost);
   showNewPostButton.addEventListener("click", showTextarea);
-  cancelPostButton.addEventListener("click", hideTextarea)
+  cancelPostButton.addEventListener("click", hideTextarea);
+  saveUserInfoButton.addEventListener("click", updateUser);
+  editButton.addEventListener("click", showEditUserInfo);
+  cancelEditButton.addEventListener("click", hideEditUserInfo);
 }
 
 window.onload = init;
