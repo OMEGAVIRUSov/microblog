@@ -130,12 +130,12 @@
       <div class="user-info-container">
         <div class="user-info">
           <button id="edit-button">Edit</button>
-          <button id="cancel-edit-button">Cancel</button>
+          <button style="display: none;" id="cancel-edit-button">Cancel</button>
 
-          <div id="edit-user-info">
+          <div style="display: none" id="edit-user-info-div">
             <form id="edit-form">
-              <label for="username-input">Username:</label>
-              <input type="text" id="username-input">
+              <label for="username-display-p">Username:</label>
+              <p id="username-display-p"></p>
 
               <label for="name-input">Full Name:</label>
               <input type="text" id="name-input">
@@ -143,11 +143,14 @@
               <label for="bio-textarea">Bio:</label>
               <textarea name="" id="bio-textarea" cols="30" rows="10"></textarea>
 
+              <label for="password-input">Enter Password:</label>
+              <input type="password" id="password-input">
+
               <button id="save-user-info-button" type="button">Save Changes</button>
             </form>
           </div>
           
-          <div id="user-info">
+          <div id="user-info-div">
             <p id="username"></p>
             <p id="fullName"></p>
             <p id="bio"></p>
