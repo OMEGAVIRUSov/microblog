@@ -25,12 +25,15 @@ function init() {
     const postDiv = document.createElement("div");
     const usernameH4 = document.createElement("h4");
     const textP = document.createElement("p");
+    const timeP = document.createElement("p");
 
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
+    timeP.innerText = post.createdAt;
 
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
+    postDiv.appendChild(timeP);
 
     postDiv.classList.add("post");
 
