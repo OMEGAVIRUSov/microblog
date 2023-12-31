@@ -30,24 +30,22 @@ function init() {
     const likeButton = document.createElement("button");
     const removeLikeButton = document.createElement("button");
 
-
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
     timeP.innerText = post.createdAt;
     likesP.innerText = `Likes: ${post.likes.length}`;
 
     likeButton.textContent = `Like`;
-    likeButton.setAttribute('data-post-id', post._id);
-    likeButton.addEventListener('click', function () {
+    likeButton.setAttribute("data-post-id", post._id);
+    likeButton.addEventListener("click", function () {
       likePost(this);
     });
 
     removeLikeButton.textContent = `Remove Like`;
-    removeLikeButton.setAttribute('data-post-id', post._id);
-    removeLikeButton.addEventListener('click', function () {
+    removeLikeButton.setAttribute("data-post-id", post._id);
+    removeLikeButton.addEventListener("click", function () {
       removeLikePost(this);
     });
-
 
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
@@ -55,7 +53,6 @@ function init() {
     postDiv.appendChild(likesP);
     postDiv.appendChild(likeButton);
     postDiv.appendChild(removeLikeButton);
-
 
     postDiv.classList.add("post");
 
@@ -80,13 +77,75 @@ function init() {
       });
   }
 
+  // function updatePage() {
+  //   // Get the current scroll position before reloading
+  //   const scrollPosition = window.scrollY;
+
+  //   // Reload the page
+  //   location.reload();
+
+  //   // Set the scroll position back to where it was after the reload
+  //   window.scrollTo(0, scrollPosition);
+  // }
+
   function likePost(likeBtn) {
-    const postId = likeBtn.getAttribute("data-post-id");
-    
+    const postID = likeBtn.getAttribute("data-post-id");
+
+    const postBody = {
+      postId: postID,
+    };
+
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/likes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(postBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // updatePage();
+      });
   }
 
   function removeLikePost(removeLikeBtn) {
-    const postId = removeLikeBtn.getAttribute("data-post-id");
+    const postID = removeLikeBtn.getAttribute("data-post-id");
+
+    const token = getToken();
+
+    function deleteLike(likeID) {
+      fetch(`${apiBaseURL}/api/likes/${likeID}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // .then((response) => response.json())
+      // .then((data) => {
+      //   console.log(data);
+      // });
+    }
+
+    fetch(`${apiBaseURL}/api/posts/${postID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        for (let like of data.likes) {
+          if (like.username == getUserName()) {
+            deleteLike(like._id);
+          }
+        }
+        // updatePage();
+      });
   }
 
   //event listeners
