@@ -17,7 +17,7 @@ function init() {
   function getToken() {
     let userData = getLoginData();
 
-      console.log(userData);
+    console.log(userData);
     return userData.token;
   }
 
@@ -26,14 +26,36 @@ function init() {
     const usernameH4 = document.createElement("h4");
     const textP = document.createElement("p");
     const timeP = document.createElement("p");
+    const likesP = document.createElement("p");
+    const likeButton = document.createElement("button");
+    const removeLikeButton = document.createElement("button");
+
 
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
     timeP.innerText = post.createdAt;
+    likesP.innerText = `Likes: ${post.likes.length}`;
+
+    likeButton.textContent = `Like`;
+    likeButton.setAttribute('data-post-id', post._id);
+    likeButton.addEventListener('click', function () {
+      likePost(this);
+    });
+
+    removeLikeButton.textContent = `Remove Like`;
+    removeLikeButton.setAttribute('data-post-id', post._id);
+    removeLikeButton.addEventListener('click', function () {
+      removeLikePost(this);
+    });
+
 
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
     postDiv.appendChild(timeP);
+    postDiv.appendChild(likesP);
+    postDiv.appendChild(likeButton);
+    postDiv.appendChild(removeLikeButton);
+
 
     postDiv.classList.add("post");
 
@@ -52,14 +74,25 @@ function init() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        for(let post of data) {
-            displayPost(post);
+        for (let post of data) {
+          displayPost(post);
         }
       });
   }
 
+  function likePost(likeBtn) {
+    const postId = likeBtn.getAttribute("data-post-id");
+    
+  }
+
+  function removeLikePost(removeLikeBtn) {
+    const postId = removeLikeBtn.getAttribute("data-post-id");
+  }
+
   //event listeners
   logOutButton.addEventListener("click", logout);
+  // likeButton.addEventListener("click", likePost)
+  // removeLikeButton.addEventListener("click", removeLikePost)
 
   //call functions onload
   loadPosts();
