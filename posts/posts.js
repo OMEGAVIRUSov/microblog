@@ -296,8 +296,15 @@ function init() {
     });
   }
 
-  function loadUsernameSelect() {
-    //
+  function loadUsernameSelect(posts) {
+    let usernames = new Set(posts.map(post => post.username));
+
+    console.log(usernames);
+
+    usernames.forEach(user => {
+      let option = new Option(user, user);
+      usernameSelect.appendChild(option);
+    })
   }
 
   function sortPosts() {
@@ -333,7 +340,7 @@ function init() {
                 displayPost(post);
               });
               
-              loadUsernameSelect();
+              loadUsernameSelect(sortByAlpha(data));
 
               usernameSelect.style.display = "block";
               break;
