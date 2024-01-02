@@ -53,7 +53,7 @@ padding: 0px;
 border: none;
 background-color: transparent;
 border-radius: 4px;
-margin: 1rem 0.5rem 0rem 0.5rem;
+margin: 0.7rem;
 }
 
 .likes-button:hover {
@@ -75,21 +75,38 @@ text-overflow: ellipsis;
 
 
 .likes-container {
-width: auto;
-height: 100%;
-max-height: 17rem;
-display: flex;
-border: 3px solid #85989aff;
-border-radius: 20px;
-}
+  width: auto;
+  height: 80%;
+  max-height: 17rem;
+  display: flex;
+  flex-wrap: wrap;
+  border: 3px solid #85989aff;
+  border-radius: 20px;
+  }
 
 .likes-inner-container {
-width: 50%;
-height: 100%;
-display: flex;
-align-items: center;
-flex-direction: column;
-}
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  }
+
+  .likes-inner-container-header {
+    width: 100%;
+    height: 75%;
+    display: flex;
+  }
+  
+  .likes-inner-container-footer {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 
 .likes-amount {
 width: 100%;
@@ -97,14 +114,11 @@ text-align: center;
 }
 
 .likes-select {
-width: 100%;
-margin: 0.5rem;
-margin-top: 1rem;
-border-radius: 5px;
-margin-right: 2rem;
-margin-left: 1rem;
-font-size: medium;
-}
+  width: 80%;
+  margin: 0.5rem;
+  border-radius: 5px;
+  font-size: medium;
+  }
 
 .posts-title {
 width: 100%;
