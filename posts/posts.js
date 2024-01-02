@@ -7,6 +7,9 @@ function init() {
   const logOutButton = document.querySelector("#log-out-button");
   const postsDiv = document.querySelector("#posts-div");
 
+  const sortBySelect = document.querySelector("#sort-by-select");
+  const usernameSelect = document.querySelector("#username-select");
+
   //functions
   function getUserName() {
     let userData = getLoginData();
@@ -115,7 +118,6 @@ function init() {
         likesSelect.appendChild(option);
       }
 
-
       likesInnerContainerB.appendChild(likesP);
       likesInnerContainerD.appendChild(likesSelect);
     }
@@ -129,10 +131,10 @@ function init() {
       likesInnerContainerC.style.height = "100%";
     } else {
       likesInnerContainerC.appendChild(likesInnerContainerB);
-    };
+    }
 
-    likesDiv.appendChild(likesInnerContainerC)
-    likesDiv.appendChild(likesInnerContainerD)
+    likesDiv.appendChild(likesInnerContainerC);
+    likesDiv.appendChild(likesInnerContainerD);
     //add to likes container
     postDiv.appendChild(infoDiv);
     postDiv.appendChild(likesDiv);
@@ -148,8 +150,6 @@ function init() {
     const postDiv = buildPost(post);
 
     postsDiv.appendChild(postDiv);
-
-    
   }
 
   function loadPosts() {
@@ -227,8 +227,8 @@ function init() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => response.json())
-      .then((data) => {
+        .then((response) => response.json())
+        .then((data) => {
           console.log(data);
           updatePage(postID);
         });
@@ -262,20 +262,89 @@ function init() {
         Authorization: `Bearer ${token}`,
       },
     })
-    .then((response) => response.json())
-    .then((data) => {
-
-      for (let postD of postsDiv.children) {
-        if (postD.getAttribute("data-post-id") == postID) {
-          postsDiv.removeChild(postD);
+      .then((response) => response.json())
+      .then((data) => {
+        for (let postD of postsDiv.children) {
+          if (postD.getAttribute("data-post-id") == postID) {
+            postsDiv.removeChild(postD);
+          }
         }
-      }
+      });
+  }
 
+  function clearPostsDiv() {
+    while (postsDiv.firstChild) {
+      postsDiv.removeChild(postsDiv.firstChild);
+    }
+  }
+
+  function displayPostsOldest(posts) {
+    for(let post of posts) {
+      postsDiv.prepend(buildPost(post));
+    }
+  }
+
+  function sortByLikes(posts) {
+    return posts.sort((a, b) => {
+      return b.likes.length - a.likes.length;
     });
+  }
+
+  function sortByAlpha(posts) {
+    return posts.sort((a,b) => {
+      return a.username.toUpperCase().localeCompare(b.username.toUpperCase());
+    });
+  }
+
+  function loadUsernameSelect() {
+    //
+  }
+
+  function sortPosts() {
+    if (sortBySelect.value != "") {
+      clearPostsDiv();
+
+      const userName = getUserName();
+      const token = getToken();
+
+      fetch(`${apiBaseURL}/api/posts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          switch (sortBySelect.value) {
+            case "newest":
+              for (let post of data) {
+                displayPost(post);
+              }
+              break;
+            case "oldest":
+              displayPostsOldest(data);
+              break;
+            case "most-likes":
+              sortByLikes(data).forEach(post => {
+                displayPost(post)
+              });
+              break;
+            case "username":
+              sortByAlpha(data).forEach(post => {
+                displayPost(post);
+              });
+              
+              loadUsernameSelect();
+
+              usernameSelect.style.display = "block";
+              break;
+          }
+        });
+    }
   }
 
   //event listeners
   logOutButton.addEventListener("click", logout);
+  sortBySelect.addEventListener("change", sortPosts);
 
   //call functions onload
   loadPosts();

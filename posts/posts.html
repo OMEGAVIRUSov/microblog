@@ -30,6 +30,17 @@
 
     <main class="main">
       <h1 class="posts-title">Main Feed</h1>
+      <select name="sort-by" id="sort-by-select">
+        <option value="">Sort by...</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="most-likes">Most Liked</option>
+        <option value="username">Username</option>
+      </select>
+      <br>
+      <select style="display: none;" name="usernames" id="username-select">
+        <option value="">Select User...</option>
+      </select>
       <div id="posts-div" class="user-posts-container">
 
       </div>
