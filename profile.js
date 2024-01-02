@@ -66,12 +66,48 @@ function init() {
     const postDiv = document.createElement("div");
     const usernameH4 = document.createElement("h4");
     const textP = document.createElement("p");
+    const timeP = document.createElement("p");
+    const likesP = document.createElement("p");
+    const likeButton = document.createElement("button");
+    const removeLikeButton = document.createElement("button");
 
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
+    timeP.innerText = post.createdAt;
+    if (post.likes) {
+      likesP.innerText = `Likes: ${post.likes.length}`;
+    }
+
+    likeButton.textContent = `Like`;
+    likeButton.setAttribute("data-post-id", post._id);
+    likeButton.addEventListener("click", function () {
+      likePost(this);
+    });
+
+    removeLikeButton.textContent = `Remove Like`;
+    removeLikeButton.setAttribute("data-post-id", post._id);
+    removeLikeButton.addEventListener("click", function () {
+      removeLikePost(this);
+    });
+
+   // if (post.username == getUserName()) {
+      const deletePostButton = document.createElement("button");
+
+      deletePostButton.textContent = `Delete Post`;
+      deletePostButton.setAttribute("data-post-id", post._id);
+      deletePostButton.addEventListener("click", function () {
+        deletePost(this);
+      });
+
+      postDiv.appendChild(deletePostButton);
+   // }
 
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
+    postDiv.appendChild(timeP);
+    postDiv.appendChild(likesP);
+    postDiv.appendChild(likeButton);
+    postDiv.appendChild(removeLikeButton);
 
     postDiv.classList.add("post");
 
@@ -107,6 +143,85 @@ function init() {
           }
         }
       });
+  }
+
+  function likePost(likeBtn) {
+    const postID = likeBtn.getAttribute("data-post-id");
+
+    const postBody = {
+      postId: postID,
+    };
+
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/likes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(postBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // updatePage();
+      });
+  }
+
+  function removeLikePost(removeLikeBtn) {
+    const postID = removeLikeBtn.getAttribute("data-post-id");
+
+    const token = getToken();
+
+    function deleteLike(likeID) {
+      fetch(`${apiBaseURL}/api/likes/${likeID}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // .then((response) => response.json())
+      // .then((data) => {
+      //   console.log(data);
+      // });
+    }
+
+    fetch(`${apiBaseURL}/api/posts/${postID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        for (let like of data.likes) {
+          if (like.username == getUserName()) {
+            deleteLike(like._id);
+          }
+        }
+        // updatePage();
+      });
+  }
+
+  function deletePost(deleteButton) {
+    const postID = deleteButton.getAttribute("data-post-id");
+
+    const token = getToken();
+
+
+    fetch(`${apiBaseURL}/api/posts/${postID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log(data);
+    // });
   }
 
   //toggle Create Post functions

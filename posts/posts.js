@@ -47,6 +47,18 @@ function init() {
       removeLikePost(this);
     });
 
+    if (post.username == getUserName()) {
+      const deletePostButton = document.createElement("button");
+
+      deletePostButton.textContent = `Delete Post`;
+      deletePostButton.setAttribute("data-post-id", post._id);
+      deletePostButton.addEventListener("click", function () {
+        deletePost(this);
+      });
+
+      postDiv.appendChild(deletePostButton);
+    }
+
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
     postDiv.appendChild(timeP);
@@ -146,6 +158,25 @@ function init() {
         }
         // updatePage();
       });
+  }
+
+  function deletePost(deleteButton) {
+    const postID = deleteButton.getAttribute("data-post-id");
+
+    const token = getToken();
+
+
+    fetch(`${apiBaseURL}/api/posts/${postID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log(data);
+    // });
   }
 
   //event listeners
