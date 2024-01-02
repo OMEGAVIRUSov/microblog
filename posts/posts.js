@@ -253,8 +253,13 @@ function init() {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      updatePage(postID);
+
+      for (let postD of postsDiv.children) {
+        if (postD.getAttribute("data-post-id") == postID) {
+          postsDiv.removeChild(postD);
+        }
+      }
+
     });
   }
 
