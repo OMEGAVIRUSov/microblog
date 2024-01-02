@@ -74,9 +74,6 @@ function init() {
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
     timeP.innerText = post.createdAt;
-    if (post.likes) {
-      likesP.innerText = `Likes: ${post.likes.length}`;
-    }
 
     likeButton.textContent = `Like`;
     likeButton.setAttribute("data-post-id", post._id);
@@ -105,7 +102,24 @@ function init() {
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
     postDiv.appendChild(timeP);
-    postDiv.appendChild(likesP);
+
+    if (post.likes && post.likes.length > 0) {
+      const likesP = document.createElement("p");
+      const likesSelect = document.createElement("select");
+
+      likesP.innerText = `Likes: ${post.likes.length}`;
+
+      for(let like of post.likes) {
+        let option = new Option(like.username, like.username);
+        likesSelect.appendChild(option);
+      }
+
+
+      postDiv.appendChild(likesP);
+      postDiv.appendChild(likesSelect)
+    }
+
+
     postDiv.appendChild(likeButton);
     postDiv.appendChild(removeLikeButton);
 
