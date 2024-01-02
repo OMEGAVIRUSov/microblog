@@ -49,6 +49,7 @@ function init() {
 
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
+    textP.className = "post-text";
     timeP.innerText = post.createdAt;
 
     likeButtonImg.src = "/assets/LikeButton.svg";
@@ -83,6 +84,7 @@ function init() {
       infoDiv.appendChild(deletePostButton);
     }
 
+    
     infoDiv.appendChild(usernameH4);
     infoDiv.appendChild(textP);
     infoDiv.appendChild(timeP);
