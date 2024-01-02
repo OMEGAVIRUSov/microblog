@@ -23,6 +23,10 @@ function init() {
 
   function displayPost(post) {
     const postDiv = document.createElement("div");
+    const infoDiv = document.createElement("div");
+    const likesDiv = document.createElement("div");
+    const likesInnerContainerA = document.createElement("div");
+    const likesInnerContainerB = document.createElement("div");
     const usernameH4 = document.createElement("h4");
     const textP = document.createElement("p");
     const timeP = document.createElement("p");
@@ -30,22 +34,42 @@ function init() {
     const likeButton = document.createElement("button");
     const removeLikeButton = document.createElement("button");
 
+    const likeButtonImg = document.createElement("img");
+    const unlikeButtonImg = document.createElement("img");
+
+    const profileIcon = document.createElement("img");
+
+    infoDiv.className = "info-div";
+    likesDiv.className = "likes-container";
+
+    profileIcon.src = "/assets/profileIcon.svg";
+    profileIcon.className = "post-profile-icon";
+
+    postDiv.appendChild(profileIcon);
+
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
     timeP.innerText = post.createdAt;
 
+    likeButtonImg.src = "/assets/LikeButton.svg";
+    likeButton.className = "likes-button";
 
-    likeButton.textContent = `Like`;
     likeButton.setAttribute("data-post-id", post._id);
     likeButton.addEventListener("click", function () {
       likePost(this);
     });
 
-    removeLikeButton.textContent = `Remove Like`;
+    likeButton.appendChild(likeButtonImg);
+
+    unlikeButtonImg.src = "/assets/UnLikeButton.svg";
+    removeLikeButton.className = "likes-button";
+
     removeLikeButton.setAttribute("data-post-id", post._id);
     removeLikeButton.addEventListener("click", function () {
       removeLikePost(this);
     });
+
+    removeLikeButton.appendChild(unlikeButtonImg);
 
     if (post.username == getUserName()) {
       const deletePostButton = document.createElement("button");
@@ -56,18 +80,31 @@ function init() {
         deletePost(this);
       });
 
-      postDiv.appendChild(deletePostButton);
+      infoDiv.appendChild(deletePostButton);
     }
 
-    postDiv.appendChild(usernameH4);
-    postDiv.appendChild(textP);
-    postDiv.appendChild(timeP);
+    infoDiv.appendChild(usernameH4);
+    infoDiv.appendChild(textP);
+    infoDiv.appendChild(timeP);
+
+    likesInnerContainerA.className = "likes-inner-container";
+    likesInnerContainerB.className = "likes-inner-container";
+
+    likesInnerContainerA.appendChild(likeButton);
+    likesInnerContainerA.appendChild(removeLikeButton);
+    
 
     if (post.likes.length > 0) {
       const likesP = document.createElement("p");
       const likesSelect = document.createElement("select");
 
-      likesP.innerText = `Likes: ${post.likes.length}`;
+      likesSelect.className = "likes-select";
+
+      likesP.className = "likes-amount"
+      likesP.innerText = `${post.likes.length}`;
+
+      let firstOption = new Option("Liked By");
+      likesSelect.appendChild(firstOption);
 
       for(let like of post.likes) {
         let option = new Option(like.username, like.username);
@@ -75,16 +112,27 @@ function init() {
       }
 
 
-      postDiv.appendChild(likesP);
-      postDiv.appendChild(likesSelect)
+      likesInnerContainerA.appendChild(likesP);
+      
+      likesInnerContainerB.appendChild(likesSelect)
     }
 
 
-    postDiv.appendChild(likeButton);
-    postDiv.appendChild(removeLikeButton);
+    likesDiv.appendChild(likesInnerContainerA);
 
+    if (likesInnerContainerB.innerHTML == "") {
+      likesInnerContainerB.style.display = "none";
+      likesInnerContainerA.style.width = "100%";
+    } else {
+      likesDiv.appendChild(likesInnerContainerB);
+    };
+    
+
+    postDiv.appendChild(infoDiv);
+    postDiv.appendChild(likesDiv);
     postDiv.classList.add("post");
 
+    //apend everything to the main post list
     postsDiv.appendChild(postDiv);
   }
 
