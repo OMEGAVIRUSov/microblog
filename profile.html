@@ -74,7 +74,8 @@
         border-radius: 15px;
         margin: 1rem;
       }
-      #username, #fullName {
+      #username,
+      #fullName {
         width: 20%;
         height: 3rem;
         border: 2px solid #85989aff;
@@ -98,38 +99,16 @@
         border-bottom-left-radius: 150px;
         border: 2px solid #85989aff;
         margin: 1rem;
+
+        padding: 1rem 4rem 1rem 4rem;
       }
 
-      .create-post-modal {
-        width: 100%;
-        height: 100vh;
-        position: absolute;
-        display: none;
-    }
-
-    .create-post-background {
-        width: 100%;
-        height: 100vh;
-        background-color: black;
-        opacity: 0.8;
-        position: absolute;
-    }
-
-    .create-post-container {
-        width: 100%;
-        height: 100%;
-        position: absolute;
+      #edit-form {
         display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        flex-direction: column;
+        width: 20%;
+      }
 
-    .create-post-box {
-        width: 60%;
-        height: 70%;
-        border-radius: 50px;
-        background-color: white;
-    }
     </style>
     <!-- Run BEFORE page is finished loading (before window.onload): -->
     <script src="../account/auth.js"></script>
@@ -142,6 +121,7 @@
   <body>
     <div class="nav">
       <a href="posts\posts.html">Posts</a>
+      <button id="log-out-button">Logout</button>
     </div>
     <div class="main">
       <div class="banner">
@@ -149,92 +129,42 @@
       </div>
       <div class="user-info-container">
         <div class="user-info">
-          <p id="username">(username)</p>
-          <p id="fullName">(full name)</p>
-          <p id="bio">(bio)</p>
-          <button onclick="openCreateModal();">Close Create Blog</button>
-          <div class="user-posts-container">
-            <div class="post"></div>
-            <div class="post"></div>
-            <div class="post"></div>
-            <div class="post"></div>
-            <div class="post"></div>
+          <button id="edit-button">Edit</button>
+          <button style="display: none;" id="cancel-edit-button">Cancel</button>
+
+          <div style="display: none" id="edit-user-info-div">
+            <form id="edit-form">
+              <label for="username-display-p">Username:</label>
+              <p id="username-display-p"></p>
+
+              <label for="name-input">Full Name:</label>
+              <input type="text" id="name-input">
+
+              <label for="bio-textarea">Bio:</label>
+              <textarea name="" id="bio-textarea" cols="30" rows="10"></textarea>
+
+              <label for="password-input">Enter Password:</label>
+              <input type="password" id="password-input">
+
+              <button id="save-user-info-button" type="button">Save Changes</button>
+            </form>
           </div>
+          
+          <div id="user-info-div">
+            <p id="username"></p>
+            <p id="fullName"></p>
+            <p id="bio"></p>
+          </div>
+
+          <button id="show-new-post-button">Create Post</button>
+          <button id="cancel-post-button" style="display: none">Cancel</button>
+          <textarea name="new-post" id="new-post-textarea" cols="30" rows="10" style="display: none"></textarea>
+          <button id="create-post-button" style="display: none">Post</button>
+
+          <div id="posts-div" class="user-posts-container"></div>
         </div>
       </div>
     </div>
-
-    <div class="create-post-modal">
-      <div class="create-post-background"></div>
-      <div class="create-post-container">
-          <div class="create-post-box">
-              <button onclick="closeCreateModal();">Close Create Blog</button>
-              <div id="bio"> 
-
-              </div>
-          </div>
-      </div>
-  </div>
-    <script>
-      "use strict";
-
-      function openCreateModal() {
-        document.querySelector(".create-post-modal").style.display = "block";
-      }
-      function closeCreateModal() {
-          document.querySelector(".create-post-modal").style.display = "none";
-      }
-
-      function init() {
-        //html elements
-        const usernameP = document.querySelector("#username");
-        const fullNameP = document.querySelector("#fullName");
-        const bioP = document.querySelector("#bio");
-
-        //functions
-        //check for authentication, if none, redirect to login page
-
-        function getUserName() {
-          let userData = getLoginData();
-
-          return userData.username;
-        }
-
-        function getToken() {
-          let userData = getLoginData();
-
-          return userData.token;
-        }
-
-        function getUserInfo() {
-          const userName = getUserName();
-          const token = getToken();
-
-          fetch(`${apiBaseURL}/api/users/${userName}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              displayUserInfo(data);
-            });
-        }
-
-        function displayUserInfo(user) {
-            usernameP.innerText = user.username;
-            fullNameP.innerText = user.fullName;
-            bioP.innerText = user.bio;
-        }
-
-        //function calls for window onload
-        getUserInfo();
-
-        //add event listeners
-      }
-
-      window.onload = init;
-    </script>
+    <script src="profile.js"></script>
   </body>
 </html>
