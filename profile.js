@@ -90,6 +90,18 @@ function init() {
       removeLikePost(this);
     });
 
+   // if (post.username == getUserName()) {
+      const deletePostButton = document.createElement("button");
+
+      deletePostButton.textContent = `Delete Post`;
+      deletePostButton.setAttribute("data-post-id", post._id);
+      deletePostButton.addEventListener("click", function () {
+        deletePost(this);
+      });
+
+      postDiv.appendChild(deletePostButton);
+   // }
+
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
     postDiv.appendChild(timeP);
@@ -199,7 +211,7 @@ function init() {
     const token = getToken();
 
 
-    fetch(`${apiBaseURL}/api/likes/${postID}`, {
+    fetch(`${apiBaseURL}/api/posts/${postID}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -166,7 +166,7 @@ function init() {
     const token = getToken();
 
 
-    fetch(`${apiBaseURL}/api/likes/${postID}`, {
+    fetch(`${apiBaseURL}/api/posts/${postID}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
