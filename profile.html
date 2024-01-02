@@ -12,6 +12,8 @@
         justify-content: center;
         background-color: #85989aff;
         overflow-y: hidden;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: large;
       }
 
       body::-webkit-scrollbar {
@@ -31,13 +33,25 @@
         background-color: transparent;
         width: 0px;
       }
-      .nav {
-        width: 10%;
-        height: 100%;
-        border-right: 2px solid white;
-        margin: 0px;
-        padding: 0px;
-      }
+      .nav-bar {
+        width: 7%;
+        padding-top: 1.5rem;
+        }
+        
+        .nav-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        }
+        
+        .nav-icon:hover {
+        opacity: 0.5;
+        }
+        
+        .post-text {
+          text-wrap: wrap;
+        }
 
       .banner {
         height: 25rem;
@@ -86,21 +100,28 @@
 
       .user-posts-container {
         width: 100%;
+        height: 90vh;
         display: flex;
         flex-direction: column;
         padding-bottom: 5rem;
+        align-items: center;
+        margin: 0px;
+        border-left: 3px solid white;
+        overflow-y: scroll;
+        overflow-x: hidden;
       }
 
       .post {
-        width: 97%;
-        height: 15rem;
+        width: 95%;
         border-radius: 25px;
         border-top-left-radius: 150px;
         border-bottom-left-radius: 150px;
-        border: 2px solid #85989aff;
+        border: 5px solid #b7b7b7;
         margin: 1rem;
-
-        padding: 1rem 4rem 1rem 4rem;
+        background-color: white;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
       }
 
       #edit-form {
@@ -108,6 +129,82 @@
         flex-direction: column;
         width: 20%;
       }
+
+      .post-profile-icon {
+        height: 15rem;
+        }
+        
+        
+        .info-div {
+        width: 80%;
+        margin: 2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        }
+        
+        
+        .likes-container {
+        width: auto;
+        height: 80%;
+        max-height: 17rem;
+        display: flex;
+        flex-wrap: wrap;
+        border: 3px solid #85989aff;
+        border-radius: 20px;
+        }
+        
+        .likes-inner-container {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        }
+
+        .likes-inner-container-header {
+          width: 100%;
+          height: 75%;
+          display: flex;
+        }
+        
+        .likes-inner-container-footer {
+          width: 100%;
+          height: 25%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+        }
+
+        .likes-amount {
+        width: 100%;
+        text-align: center;
+        }
+        
+        .likes-select {
+          width: 80%;
+          margin: 0.5rem;
+          font-size: medium;
+          border-radius: 5px;
+          }
+
+          .likes-button {
+            width: 3rem;
+            height: 3rem;
+            padding: 0px;
+            border: none;
+            background-color: transparent;
+            border-radius: 4px;
+            margin: 0.7rem;
+            }
+          
+          .likes-button:hover {
+          opacity: 0.5;
+          }
+
+          
 
     </style>
     <!-- Run BEFORE page is finished loading (before window.onload): -->

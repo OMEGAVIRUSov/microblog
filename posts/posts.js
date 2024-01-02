@@ -27,6 +27,8 @@ function init() {
     const likesDiv = document.createElement("div");
     const likesInnerContainerA = document.createElement("div");
     const likesInnerContainerB = document.createElement("div");
+    const likesInnerContainerC = document.createElement("div");
+    const likesInnerContainerD = document.createElement("div");
     const usernameH4 = document.createElement("h4");
     const textP = document.createElement("p");
     const timeP = document.createElement("p");
@@ -91,6 +93,8 @@ function init() {
 
     likesInnerContainerA.className = "likes-inner-container";
     likesInnerContainerB.className = "likes-inner-container";
+    likesInnerContainerC.className = "likes-inner-container-header";
+    likesInnerContainerD.className = "likes-inner-container-footer";
 
     likesInnerContainerA.appendChild(likeButton);
     likesInnerContainerA.appendChild(removeLikeButton);
@@ -114,28 +118,33 @@ function init() {
       }
 
 
-      likesInnerContainerA.appendChild(likesP);
-      
-      likesInnerContainerB.appendChild(likesSelect)
+      likesInnerContainerB.appendChild(likesP);
+      likesInnerContainerD.appendChild(likesSelect);
     }
 
 
-    likesDiv.appendChild(likesInnerContainerA);
+    likesInnerContainerC.appendChild(likesInnerContainerA);
 
     if (likesInnerContainerB.innerHTML == "") {
       likesInnerContainerB.style.display = "none";
+      likesInnerContainerB.style.display = "none";
       likesInnerContainerA.style.width = "100%";
+      likesInnerContainerC.style.height = "100%";
     } else {
-      likesDiv.appendChild(likesInnerContainerB);
+      likesInnerContainerC.appendChild(likesInnerContainerB);
     };
-    
 
+    likesDiv.appendChild(likesInnerContainerC)
+    likesDiv.appendChild(likesInnerContainerD)
+    //add to likes container
     postDiv.appendChild(infoDiv);
     postDiv.appendChild(likesDiv);
     postDiv.classList.add("post");
 
     //apend everything to the main post list
     postsDiv.appendChild(postDiv);
+
+    
   }
 
   function loadPosts() {
