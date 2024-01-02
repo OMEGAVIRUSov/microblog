@@ -245,8 +245,6 @@ function init() {
 
   //event listeners
   logOutButton.addEventListener("click", logout);
-  // likeButton.addEventListener("click", likePost)
-  // removeLikeButton.addEventListener("click", removeLikePost)
 
   //call functions onload
   loadPosts();
