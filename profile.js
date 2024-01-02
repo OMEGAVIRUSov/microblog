@@ -66,12 +66,34 @@ function init() {
     const postDiv = document.createElement("div");
     const usernameH4 = document.createElement("h4");
     const textP = document.createElement("p");
+    const timeP = document.createElement("p");
+    const likesP = document.createElement("p");
+    const likeButton = document.createElement("button");
+    const removeLikeButton = document.createElement("button");
 
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
+    timeP.innerText = post.createdAt;
+    likesP.innerText = `Likes: ${post.likes.length}`;
+
+    likeButton.textContent = `Like`;
+    likeButton.setAttribute("data-post-id", post._id);
+    likeButton.addEventListener("click", function () {
+      likePost(this);
+    });
+
+    removeLikeButton.textContent = `Remove Like`;
+    removeLikeButton.setAttribute("data-post-id", post._id);
+    removeLikeButton.addEventListener("click", function () {
+      removeLikePost(this);
+    });
 
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
+    postDiv.appendChild(timeP);
+    postDiv.appendChild(likesP);
+    postDiv.appendChild(likeButton);
+    postDiv.appendChild(removeLikeButton);
 
     postDiv.classList.add("post");
 
