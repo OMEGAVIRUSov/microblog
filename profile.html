@@ -257,11 +257,19 @@
           <button id="cancel-post-button" style="display: none">Cancel</button>
           <textarea name="new-post" id="new-post-textarea" cols="30" rows="10" style="display: none"></textarea>
           <button id="create-post-button" style="display: none">Post</button>
+          <br>
+          <select name="sort-by" id="sort-by-select">
+            <option value="">Sort by...</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="most-likes">Most Liked</option>
+          </select>
 
           <div id="posts-div" class="user-posts-container"></div>
         </div>
       </div>
     </div>
+    <script src="posts/posts.js"></script>
     <script src="profile.js"></script>
   </body>
 </html>
