@@ -74,7 +74,9 @@ function init() {
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
     timeP.innerText = post.createdAt;
-    likesP.innerText = `Likes: ${post.likes.length}`;
+    if (post.likes) {
+      likesP.innerText = `Likes: ${post.likes.length}`;
+    }
 
     likeButton.textContent = `Like`;
     likeButton.setAttribute("data-post-id", post._id);
@@ -129,6 +131,85 @@ function init() {
           }
         }
       });
+  }
+
+  function likePost(likeBtn) {
+    const postID = likeBtn.getAttribute("data-post-id");
+
+    const postBody = {
+      postId: postID,
+    };
+
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/likes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(postBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // updatePage();
+      });
+  }
+
+  function removeLikePost(removeLikeBtn) {
+    const postID = removeLikeBtn.getAttribute("data-post-id");
+
+    const token = getToken();
+
+    function deleteLike(likeID) {
+      fetch(`${apiBaseURL}/api/likes/${likeID}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // .then((response) => response.json())
+      // .then((data) => {
+      //   console.log(data);
+      // });
+    }
+
+    fetch(`${apiBaseURL}/api/posts/${postID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        for (let like of data.likes) {
+          if (like.username == getUserName()) {
+            deleteLike(like._id);
+          }
+        }
+        // updatePage();
+      });
+  }
+
+  function deletePost(deleteButton) {
+    const postID = deleteButton.getAttribute("data-post-id");
+
+    const token = getToken();
+
+
+    fetch(`${apiBaseURL}/api/likes/${postID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log(data);
+    // });
   }
 
   //toggle Create Post functions
