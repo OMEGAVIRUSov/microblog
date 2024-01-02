@@ -50,7 +50,7 @@ function init() {
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
     textP.className = "post-text";
-    timeP.innerText = post.createdAt;
+    timeP.innerText = new Date(post.createdAt).toLocaleString();
 
     likeButtonImg.src = "/assets/LikeButton.svg";
     likeButton.className = "likes-button";
@@ -247,8 +247,6 @@ function init() {
 
   //event listeners
   logOutButton.addEventListener("click", logout);
-  // likeButton.addEventListener("click", likePost)
-  // removeLikeButton.addEventListener("click", removeLikePost)
 
   //call functions onload
   loadPosts();
