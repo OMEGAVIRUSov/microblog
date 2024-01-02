@@ -10,6 +10,15 @@ body {
   overflow-y: hidden;
 }
 
+.main {
+  overflow: hidden;
+}
+
+.main::-webkit-scrollbar {
+  width: 0px;
+  background-color: transparent;
+}
+
 .post {
   width: 80%;
   height: 15rem;
@@ -34,6 +43,7 @@ body {
   margin: 0px;
   border-left: 3px solid white;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .likes-button {
@@ -58,6 +68,7 @@ height: 100%;
 .info-div {
 width: 80%;
 margin: 2rem;
+text-wrap: wrap;
 }
 
 
