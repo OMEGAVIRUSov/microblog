@@ -73,7 +73,7 @@ function init() {
 
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
-    timeP.innerText = post.createdAt;
+    timeP.innerText = new Date(post.createdAt).toLocaleString();
 
     likeButton.textContent = `Like`;
     likeButton.setAttribute("data-post-id", post._id);
