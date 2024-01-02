@@ -21,7 +21,7 @@ function init() {
     return userData.token;
   }
 
-  function displayPost(post) {
+  function buildPost(post) {
     const postDiv = document.createElement("div");
     const infoDiv = document.createElement("div");
     const likesDiv = document.createElement("div");
@@ -86,7 +86,6 @@ function init() {
       infoDiv.appendChild(deletePostButton);
     }
 
-    
     infoDiv.appendChild(usernameH4);
     infoDiv.appendChild(textP);
     infoDiv.appendChild(timeP);
@@ -98,21 +97,20 @@ function init() {
 
     likesInnerContainerA.appendChild(likeButton);
     likesInnerContainerA.appendChild(removeLikeButton);
-    
 
-    if (post.likes.length > 0) {
+    if (post.likes && post.likes.length > 0) {
       const likesP = document.createElement("p");
       const likesSelect = document.createElement("select");
 
       likesSelect.className = "likes-select";
 
-      likesP.className = "likes-amount"
+      likesP.className = "likes-amount";
       likesP.innerText = `${post.likes.length}`;
 
       let firstOption = new Option("Liked By");
       likesSelect.appendChild(firstOption);
 
-      for(let like of post.likes) {
+      for (let like of post.likes) {
         let option = new Option(like.username, like.username);
         likesSelect.appendChild(option);
       }
@@ -121,7 +119,6 @@ function init() {
       likesInnerContainerB.appendChild(likesP);
       likesInnerContainerD.appendChild(likesSelect);
     }
-
 
     likesInnerContainerC.appendChild(likesInnerContainerA);
 
@@ -141,7 +138,15 @@ function init() {
     postDiv.appendChild(likesDiv);
     postDiv.classList.add("post");
 
-    //apend everything to the main post list
+    postDiv.setAttribute("data-post-id", post._id);
+
+    //return post Div so it can be appended to the main post list
+    return postDiv;
+  }
+
+  function displayPost(post) {
+    const postDiv = buildPost(post);
+
     postsDiv.appendChild(postDiv);
 
     
@@ -165,16 +170,25 @@ function init() {
       });
   }
 
-  // function updatePage() {
-  //   // Get the current scroll position before reloading
-  //   const scrollPosition = window.scrollY;
+  function updatePage(postID) {
+    for (let postD of postsDiv.children) {
+      if (postD.getAttribute("data-post-id") == postID) {
+        const token = getToken();
 
-  //   // Reload the page
-  //   location.reload();
-
-  //   // Set the scroll position back to where it was after the reload
-  //   window.scrollTo(0, scrollPosition);
-  // }
+        fetch(`${apiBaseURL}/api/posts/${postID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            console.log("update");
+            postD.replaceWith(buildPost(data));
+          });
+      }
+    }
+  }
 
   function likePost(likeBtn) {
     const postID = likeBtn.getAttribute("data-post-id");
@@ -196,7 +210,7 @@ function init() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        // updatePage();
+        updatePage(postID);
       });
   }
 
@@ -212,11 +226,12 @@ function init() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      });
-      // .then((response) => response.json())
-      // .then((data) => {
-      //   console.log(data);
-      // });
+      })
+      .then((response) => response.json())
+      .then((data) => {
+          console.log(data);
+          updatePage(postID);
+        });
     }
 
     fetch(`${apiBaseURL}/api/posts/${postID}`, {
@@ -232,7 +247,6 @@ function init() {
             deleteLike(like._id);
           }
         }
-        // updatePage();
       });
   }
 
@@ -247,11 +261,17 @@ function init() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+
+      for (let postD of postsDiv.children) {
+        if (postD.getAttribute("data-post-id") == postID) {
+          postsDiv.removeChild(postD);
+        }
+      }
+
     });
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data);
-    // });
   }
 
   //event listeners

@@ -184,6 +184,8 @@ function init() {
 
     postDiv.classList.add("post");
 
+    postDiv.setAttribute("data-post-id", post._id);
+
     return postDiv;
   }
 
@@ -218,6 +220,26 @@ function init() {
       });
   }
 
+  function updatePage(postID) {
+    for (let postD of postsDiv.children) {
+      if (postD.getAttribute("data-post-id") == postID) {
+        const token = getToken();
+
+        fetch(`${apiBaseURL}/api/posts/${postID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            console.log("update");
+            postD.replaceWith(buildPost(data));
+          });
+      }
+    }
+  }
+
   function likePost(likeBtn) {
     const postID = likeBtn.getAttribute("data-post-id");
 
@@ -238,7 +260,7 @@ function init() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        // updatePage();
+        updatePage(postID);
       });
   }
 
@@ -254,11 +276,12 @@ function init() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      });
-      // .then((response) => response.json())
-      // .then((data) => {
-      //   console.log(data);
-      // });
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        updatePage(postID);
+      })
     }
 
     fetch(`${apiBaseURL}/api/posts/${postID}`, {
@@ -274,7 +297,6 @@ function init() {
             deleteLike(like._id);
           }
         }
-        // updatePage();
       });
   }
 
@@ -290,11 +312,17 @@ function init() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+
+      for (let postD of postsDiv.children) {
+        if (postD.getAttribute("data-post-id") == postID) {
+          postsDiv.removeChild(postD);
+        }
+      }
     });
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data);
-    // });
   }
 
   //toggle Create Post functions
