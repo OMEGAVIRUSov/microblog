@@ -279,7 +279,7 @@ function init() {
   }
 
   function displayPostsOldest(posts) {
-    for(let post of posts) {
+    for (let post of posts) {
       postsDiv.prepend(buildPost(post));
     }
   }
@@ -291,20 +291,34 @@ function init() {
   }
 
   function sortByAlpha(posts) {
-    return posts.sort((a,b) => {
+    return posts.sort((a, b) => {
       return a.username.toUpperCase().localeCompare(b.username.toUpperCase());
     });
   }
 
   function loadUsernameSelect() {
-    //
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/posts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let usernames = new Set(sortByAlpha(data).map((post) => post.username));
+
+        usernames.forEach((user) => {
+          let option = new Option(user, user);
+          usernameSelect.appendChild(option);
+        });
+      });
   }
 
-  function sortPosts() {
+  function getPostsToSort() {
     if (sortBySelect.value != "") {
       clearPostsDiv();
 
-      const userName = getUserName();
       const token = getToken();
 
       fetch(`${apiBaseURL}/api/posts`, {
@@ -314,40 +328,50 @@ function init() {
       })
         .then((response) => response.json())
         .then((data) => {
-          switch (sortBySelect.value) {
-            case "newest":
-              for (let post of data) {
-                displayPost(post);
-              }
-              break;
-            case "oldest":
-              displayPostsOldest(data);
-              break;
-            case "most-likes":
-              sortByLikes(data).forEach(post => {
-                displayPost(post)
-              });
-              break;
-            case "username":
-              sortByAlpha(data).forEach(post => {
-                displayPost(post);
-              });
-              
-              loadUsernameSelect();
-
-              usernameSelect.style.display = "block";
-              break;
+          if (usernameSelect.value == "all") {
+            sortPosts(data);
+          } else {
+            sortPosts(refinePosts(data));
           }
         });
     }
   }
 
+  function sortPosts(posts) {
+    switch (sortBySelect.value) {
+      case "newest":
+        for (let post of posts) {
+          displayPost(post);
+        }
+        break;
+      case "oldest":
+        displayPostsOldest(posts);
+        break;
+      case "most-likes":
+        sortByLikes(posts).forEach((post) => {
+          displayPost(post);
+        });
+        break;
+      case "username":
+        sortByAlpha(posts).forEach((post) => {
+          displayPost(post);
+        });
+        break;
+    }
+  }
+
+  function refinePosts(posts) {
+    return posts.filter((post) => post.username == usernameSelect.value);
+  }
+
   //event listeners
   logOutButton.addEventListener("click", logout);
-  sortBySelect.addEventListener("change", sortPosts);
+  sortBySelect.addEventListener("change", getPostsToSort);
+  usernameSelect.addEventListener("change", getPostsToSort);
 
   //call functions onload
   loadPosts();
+  loadUsernameSelect();
 }
 
 window.onload = init;
