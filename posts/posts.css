@@ -2,7 +2,7 @@
 body {
   background-color: #85989aff;
   display: flex;
-  font-size: x-large;
+  font-size: large;
   margin: 0px;
   padding: 0px;
   /*can be switched ot anything, yall can decide*/
@@ -12,6 +12,7 @@ body {
 
 .main {
   overflow: hidden;
+  width: 100%;
 }
 
 .main::-webkit-scrollbar {
@@ -21,7 +22,6 @@ body {
 
 .post {
   width: 80%;
-  height: 15rem;
   border-radius: 25px;
   border-top-left-radius: 150px;
   border-bottom-left-radius: 150px;
@@ -61,20 +61,23 @@ opacity: 0.5;
 }
 
 .post-profile-icon {
-height: 100%;
+height: 15rem;
 }
 
 
 .info-div {
 width: 80%;
 margin: 2rem;
-text-wrap: wrap;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
 
 .likes-container {
 width: auto;
 height: 100%;
+max-height: 17rem;
 display: flex;
 border: 3px solid #85989aff;
 border-radius: 20px;
@@ -116,7 +119,7 @@ border-bottom: 3px solid white;
 }
 
 .nav-bar {
-width: 10%;
+width: 7%;
 padding-top: 1.5rem;
 }
 
@@ -129,4 +132,8 @@ margin-top: 1rem;
 
 .nav-icon:hover {
 opacity: 0.5;
+}
+
+.post-text {
+  text-wrap: wrap;
 }
