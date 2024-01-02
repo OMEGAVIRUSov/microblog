@@ -26,14 +26,14 @@ function init() {
     const usernameH4 = document.createElement("h4");
     const textP = document.createElement("p");
     const timeP = document.createElement("p");
-    const likesP = document.createElement("p");
+
     const likeButton = document.createElement("button");
     const removeLikeButton = document.createElement("button");
 
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
     timeP.innerText = post.createdAt;
-    likesP.innerText = `Likes: ${post.likes.length}`;
+
 
     likeButton.textContent = `Like`;
     likeButton.setAttribute("data-post-id", post._id);
@@ -62,7 +62,24 @@ function init() {
     postDiv.appendChild(usernameH4);
     postDiv.appendChild(textP);
     postDiv.appendChild(timeP);
-    postDiv.appendChild(likesP);
+
+    if (post.likes.length > 0) {
+      const likesP = document.createElement("p");
+      const likesSelect = document.createElement("select");
+
+      likesP.innerText = `Likes: ${post.likes.length}`;
+
+      for(let like of post.likes) {
+        let option = new Option(like.username, like.username);
+        likesSelect.appendChild(option);
+      }
+
+
+      postDiv.appendChild(likesP);
+      postDiv.appendChild(likesSelect)
+    }
+
+
     postDiv.appendChild(likeButton);
     postDiv.appendChild(removeLikeButton);
 
@@ -164,7 +181,6 @@ function init() {
     const postID = deleteButton.getAttribute("data-post-id");
 
     const token = getToken();
-
 
     fetch(`${apiBaseURL}/api/posts/${postID}`, {
       method: "DELETE",
