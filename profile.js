@@ -48,7 +48,7 @@ function init() {
   }
 
   function displayUserInfo(user) {
-    usernameP.innerText = user.username;
+    usernameP.innerText = `@${user.username}`;
     fullNameP.innerText = user.fullName;
     bioP.innerText = user.bio;
   }
