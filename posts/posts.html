@@ -12,7 +12,7 @@
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="posts.css" />
 
-    <title>/POSTS</title>
+    <title>Posts</title>
 
     <!-- Run BEFORE page is finished loading (before window.onload): -->
     <script src="../account/auth.js"></script>
@@ -23,13 +23,30 @@
     </script>
   </head>
   <body>
-    <header></header>
+    <header class="nav-bar">
+      <a class="nav-icon" href="../profile.html"><img style="width: 80%;" src="/assets/navProfileIcon.svg" alt=""></a>
+      <a class="nav-icon" id="log-out-button"><img style="width: 80%;" src="/assets/logoutIcon.svg" alt=""></a>
+    </header>
 
-    <main>
-      <h1>Posts</h1>
+    <main class="main">
+      <h1 class="posts-title">Main Feed</h1>
+      <select name="sort-by" id="sort-by-select">
+        <option value="">Sort by...</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="most-likes">Most Liked</option>
+        <option value="username">Username</option>
+      </select>
+      <br>
+      <select name="usernames" id="username-select">
+        <option value="all">All Users...</option>
+      </select>
+      <div id="posts-div" class="user-posts-container">
+
+      </div>
     </main>
 
-    <footer></footer>
+       <footer></footer>
 
     <!-- Page-specific code -->
     <script src="posts.js"></script>

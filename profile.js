@@ -1,14 +1,31 @@
-/* Posts Page JavaScript */
-
 "use strict";
 
 function init() {
-  //get HTML
+  //html elements
+  const usernameP = document.querySelector("#username");
+  const fullNameP = document.querySelector("#fullName");
+  const bioP = document.querySelector("#bio");
   const logOutButton = document.querySelector("#log-out-button");
+
   const postsDiv = document.querySelector("#posts-div");
 
+  const showNewPostButton = document.querySelector("#show-new-post-button");
+  const cancelPostButton = document.querySelector("#cancel-post-button");
+  const newPostTextarea = document.querySelector("#new-post-textarea");
+  const createPostButton = document.querySelector("#create-post-button");
+
+  const editButton = document.querySelector("#edit-button");
+  const cancelEditButton = document.querySelector("#cancel-edit-button");
+  const userInfoDiv = document.querySelector("#user-info-div");
+  const editUserInfoDiv = document.querySelector("#edit-user-info-div");
+  const saveUserInfoButton = document.querySelector("#save-user-info-button");
+
+  const usernameDisplayP = document.querySelector("#username-display-p");
+  const fullNameInput = document.querySelector("#name-input");
+  const bioTextarea = document.querySelector("#bio-textarea");
+  const passwordInput = document.querySelector("#password-input");
+
   const sortBySelect = document.querySelector("#sort-by-select");
-  const usernameSelect = document.querySelector("#username-select");
 
   //functions
   function getUserName() {
@@ -24,20 +41,44 @@ function init() {
     return userData.token;
   }
 
+  function getUserInfoToDisplay() {
+    const userName = getUserName();
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/users/${userName}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        displayUserInfo(data);
+      });
+  }
+
+  function displayUserInfo(user) {
+    usernameP.innerText = user.username;
+    fullNameP.innerText = user.fullName;
+    bioP.innerText = user.bio;
+  }
+
+  //show posts functions
   function buildPost(post) {
     const postDiv = document.createElement("div");
+    const usernameH4 = document.createElement("h4");
+    const textP = document.createElement("p");
+    const timeP = document.createElement("p");
+    const likesP = document.createElement("p");
+    const likeButton = document.createElement("button");
+    const removeLikeButton = document.createElement("button");
+
     const infoDiv = document.createElement("div");
     const likesDiv = document.createElement("div");
     const likesInnerContainerA = document.createElement("div");
     const likesInnerContainerB = document.createElement("div");
     const likesInnerContainerC = document.createElement("div");
     const likesInnerContainerD = document.createElement("div");
-    const usernameH4 = document.createElement("h4");
-    const textP = document.createElement("p");
-    const timeP = document.createElement("p");
-
-    const likeButton = document.createElement("button");
-    const removeLikeButton = document.createElement("button");
 
     const likeButtonImg = document.createElement("img");
     const unlikeButtonImg = document.createElement("img");
@@ -47,13 +88,14 @@ function init() {
     infoDiv.className = "info-div";
     likesDiv.className = "likes-container";
 
-    profileIcon.src = "/assets/navProfileIconTest (1).svg";
+    profileIcon.src = "/assets/profileIcon.svg";
     profileIcon.className = "post-profile-icon";
 
     postDiv.appendChild(profileIcon);
 
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
+
     textP.className = "post-text";
     timeP.innerText = new Date(post.createdAt).toLocaleString();
 
@@ -77,17 +119,17 @@ function init() {
 
     removeLikeButton.appendChild(unlikeButtonImg);
 
-    if (post.username == getUserName()) {
-      const deletePostButton = document.createElement("button");
+    // if (post.username == getUserName()) {
+    const deletePostButton = document.createElement("button");
 
-      deletePostButton.textContent = `Delete Post`;
-      deletePostButton.setAttribute("data-post-id", post._id);
-      deletePostButton.addEventListener("click", function () {
-        deletePost(this);
-      });
+    deletePostButton.textContent = `Delete Post`;
+    deletePostButton.setAttribute("data-post-id", post._id);
+    deletePostButton.addEventListener("click", function () {
+      deletePost(this);
+    });
 
-      infoDiv.appendChild(deletePostButton);
-    }
+    infoDiv.appendChild(deletePostButton);
+    // }
 
     infoDiv.appendChild(usernameH4);
     infoDiv.appendChild(textP);
@@ -107,7 +149,6 @@ function init() {
 
       likesSelect.className = "likes-select";
 
-      likesP.className = "likes-amount";
       likesP.innerText = `${post.likes.length}`;
 
       let firstOption = new Option("Liked By");
@@ -118,12 +159,12 @@ function init() {
         likesSelect.appendChild(option);
       }
 
+      //also add to likes container
       likesInnerContainerB.appendChild(likesP);
       likesInnerContainerD.appendChild(likesSelect);
     }
 
     likesInnerContainerC.appendChild(likesInnerContainerA);
-
     if (likesInnerContainerB.innerHTML == "") {
       likesInnerContainerB.style.display = "none";
       likesInnerContainerB.style.display = "none";
@@ -138,11 +179,11 @@ function init() {
     //add to likes container
     postDiv.appendChild(infoDiv);
     postDiv.appendChild(likesDiv);
+
     postDiv.classList.add("post");
 
     postDiv.setAttribute("data-post-id", post._id);
 
-    //return post Div so it can be appended to the main post list
     return postDiv;
   }
 
@@ -152,8 +193,14 @@ function init() {
     postsDiv.appendChild(postDiv);
   }
 
-  function loadPosts() {
-    // const userName = getUserName();
+  function displayPostFirst(post) {
+    const postDiv = buildPost(post);
+
+    postsDiv.prepend(postDiv);
+  }
+
+  function loadUserPosts() {
+    const userName = getUserName();
     const token = getToken();
 
     fetch(`${apiBaseURL}/api/posts`, {
@@ -163,9 +210,10 @@ function init() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         for (let post of data) {
-          displayPost(post);
+          if (userName == post.username) {
+            displayPost(post);
+          }
         }
       });
   }
@@ -264,11 +312,135 @@ function init() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
+
         for (let postD of postsDiv.children) {
           if (postD.getAttribute("data-post-id") == postID) {
             postsDiv.removeChild(postD);
           }
         }
+      });
+  }
+
+  //toggle Create Post functions
+  function clearTextarea() {
+    newPostTextarea.value = "";
+  }
+
+  function showTextarea() {
+    showNewPostButton.style.display = "none";
+    cancelPostButton.style.display = "block";
+    newPostTextarea.style.display = "block";
+    createPostButton.style.display = "block";
+  }
+
+  function hideTextarea() {
+    clearTextarea();
+    showNewPostButton.style.display = "block";
+    cancelPostButton.style.display = "none";
+    newPostTextarea.style.display = "none";
+    createPostButton.style.display = "none";
+  }
+
+  //create post functions
+  function createPost() {
+    const post = {
+      text: newPostTextarea.value,
+    };
+
+    clearTextarea();
+
+    savePost(post);
+  }
+
+  function savePost(post) {
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(post),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        displayPostFirst(data);
+      });
+  }
+
+  //edit user information functions
+  function populateEditForm(user) {
+    usernameDisplayP.innerText = user.username;
+    fullNameInput.value = user.fullName;
+    bioTextarea.value = user.bio;
+    passwordInput.value = "";
+  }
+
+  function getUserInfoToEdit() {
+    const userName = getUserName();
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/users/${userName}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        populateEditForm(data);
+      });
+  }
+
+  //toggle
+  function showEditUserInfo() {
+    getUserInfoToEdit();
+
+    userInfoDiv.style.display = "none";
+    editButton.style.display = "none";
+
+    cancelEditButton.style.display = "block";
+    editUserInfoDiv.style.display = "block";
+  }
+
+  function hideEditUserInfo() {
+    cancelEditButton.style.display = "none";
+    editUserInfoDiv.style.display = "none";
+
+    userInfoDiv.style.display = "block";
+    editButton.style.display = "block";
+  }
+
+  function buildUser() {
+    let user = {
+      password: passwordInput.value,
+      bio: bioTextarea.value,
+      fullName: fullNameInput.value,
+    };
+
+    return user;
+  }
+
+  async function updateUser() {
+    const user = buildUser();
+    const token = getToken();
+
+    fetch(apiBaseURL + "/api/users/" + getUserName(), {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        hideEditUserInfo();
+        displayUserInfo(data);
       });
   }
 
@@ -296,25 +468,6 @@ function init() {
     });
   }
 
-  function loadUsernameSelect() {
-    const token = getToken();
-
-    fetch(`${apiBaseURL}/api/posts`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        let usernames = new Set(sortByAlpha(data).map((post) => post.username));
-
-        usernames.forEach((user) => {
-          let option = new Option(user, user);
-          usernameSelect.appendChild(option);
-        });
-      });
-  }
-
   function getPostsToSort() {
     if (sortBySelect.value != "") {
       clearPostsDiv();
@@ -328,11 +481,7 @@ function init() {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (usernameSelect.value == "all") {
-            sortPosts(data);
-          } else {
-            sortPosts(refinePosts(data));
-          }
+          sortPosts(refinePosts(data));
         });
     }
   }
@@ -361,17 +510,22 @@ function init() {
   }
 
   function refinePosts(posts) {
-    return posts.filter((post) => post.username == usernameSelect.value);
+    return posts.filter((post) => post.username == getUserName());
   }
 
-  //event listeners
-  logOutButton.addEventListener("click", logout);
-  sortBySelect.addEventListener("change", getPostsToSort);
-  usernameSelect.addEventListener("change", getPostsToSort);
+  //function calls for window onload
+  getUserInfoToDisplay();
+  loadUserPosts();
 
-  //call functions onload
-  loadPosts();
-  loadUsernameSelect();
+  //add event listeners
+  logOutButton.addEventListener("click", logout);
+  createPostButton.addEventListener("click", createPost);
+  showNewPostButton.addEventListener("click", showTextarea);
+  cancelPostButton.addEventListener("click", hideTextarea);
+  saveUserInfoButton.addEventListener("click", updateUser);
+  editButton.addEventListener("click", showEditUserInfo);
+  cancelEditButton.addEventListener("click", hideEditUserInfo);
+  sortBySelect.addEventListener("change", getPostsToSort);
 }
 
 window.onload = init;

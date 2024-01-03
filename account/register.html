@@ -7,43 +7,46 @@
 
     <!-- Global CSS (CSS rules you want applied to all pages) -->
     <link rel="stylesheet" href="global.css" />
-
+    <link rel="stylesheet" href="register.css">
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="index.css" />
+    <style>
+      form {
+        max-width: 8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    </style>
 
     <title>Login to the Microblog Network!</title>
   </head>
   <body>
     <header>
-      <nav>
-        
-      </nav>
+      <nav></nav>
     </header>
 
     <main>
-      <form>
-        <div>
-        <h1>Register</h1>
-        <p>Fill out the form below to create an account</p>
-        <hr>
+      <h1>Register</h1>
+      <div class="fieldset">
+        <form>
+          <label for="name-input">Name: </label>
+          <input id="name-input" type="text" />
 
-        <label for="">Email</label>
-        <input type="text" placeholder="Enter Email" id="" required>
+          <label for="user-name-input">Username: </label>
+          <input id="user-name-input" type="text" />
 
-        <label for="">Password</label>
-        <input type="text" placeholder="Enter Password" id="" required>
+          <label for="password-input">Password: </label>
+          <input id="password-input" type="text" />
 
-        <label for="">Repeat Password</label>
-        <input type="text" placeholder="Repeat Password" id="" required>
-        <p>Click the button to Continue</p>
-        <button type="submit" id="registerButton">Register</button>
+          <button type="button" id="submit-button">Submit</button>
+        </form>
       </div>
-      </form>
     </main>
 
     <footer></footer>
 
     <!-- Page-specific code -->
-    <script src="index.js"></script>
+    <script src="register.js"></script>
   </body>
 </html>

@@ -11,6 +11,8 @@
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="index.css" />
 
+    <script src="../account/auth.js"></script>
+
     <title>Login to the Microblog Network!</title>
   </head>
   <body>
@@ -18,6 +20,8 @@
       <nav>
         <span id="greetingSpan">Welcome </span>
         <a id="loginLink" href="account/login.html">Login</a>
+        <a href="account/register.html">Register</a>
+        <button id="log-out-button">Logout</button>
       </nav>
     </header>
 
@@ -31,11 +35,18 @@
     <script>
       const loginLink = document.querySelector("#loginLink");
       const greetingSpan = document.querySelector("#greetingSpan");
+      const logOutButton = document.querySelector("#log-out-button");
+
       if (isLoggedIn() == true) {
         loginLink.style.display = "none";
+        logOutButton.style.display = "block";
       } else {
         greetingSpan.style.display = "none";
+        logOutButton.style.display = "none";
       }
+
+      //event listeners
+      logOutButton.addEventListener("click", logout);
     </script>
     <!-- Page-specific code -->
 
