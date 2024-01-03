@@ -27,6 +27,8 @@ function init() {
 
   const sortBySelect = document.querySelector("#sort-by-select");
 
+  const createPostModal = document.querySelector(".create-post-modal");
+
   // functions
   function getUserInfoToDisplay() {
     const userName = getUserName();
@@ -62,18 +64,22 @@ function init() {
   }
 
   function showTextarea() {
-    showNewPostButton.style.display = "none";
+    /* showNewPostButton.style.display = "none";
     cancelPostButton.style.display = "block";
     newPostTextarea.style.display = "block";
-    createPostButton.style.display = "block";
+    createPostButton.style.display = "block"; */
+
+    createPostModal.style.display = "flex";
   }
 
   function hideTextarea() {
     clearTextarea();
-    showNewPostButton.style.display = "block";
+    /* showNewPostButton.style.display = "block";
     cancelPostButton.style.display = "none";
     newPostTextarea.style.display = "none";
-    createPostButton.style.display = "none";
+    createPostButton.style.display = "none"; */
+
+    createPostModal.style.display = "none";
   }
 
   //create post functions
