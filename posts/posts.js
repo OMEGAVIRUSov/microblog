@@ -44,7 +44,7 @@ function init() {
     infoDiv.className = "info-div";
     likesDiv.className = "likes-container";
 
-    profileIcon.src = "/assets/profileIcon.svg";
+    profileIcon.src = "/assets/navProfileIconTest (1).svg";
     profileIcon.className = "post-profile-icon";
 
     postDiv.appendChild(profileIcon);
