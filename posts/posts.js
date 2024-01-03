@@ -7,6 +7,9 @@ function init() {
   const logOutButton = document.querySelector("#log-out-button");
   const postsDiv = document.querySelector("#posts-div");
 
+  const sortBySelect = document.querySelector("#sort-by-select");
+  const usernameSelect = document.querySelector("#username-select");
+
   //functions
   function getUserName() {
     let userData = getLoginData();
@@ -21,7 +24,7 @@ function init() {
     return userData.token;
   }
 
-  function displayPost(post) {
+  function buildPost(post) {
     const postDiv = document.createElement("div");
     const infoDiv = document.createElement("div");
     const likesDiv = document.createElement("div");
@@ -52,7 +55,7 @@ function init() {
     usernameH4.innerText = `${post.username}:`;
     textP.innerText = post.text;
     textP.className = "post-text";
-    timeP.innerText = post.createdAt;
+    timeP.innerText = new Date(post.createdAt).toLocaleString();
 
     likeButtonImg.src = "/assets/LikeButton.svg";
     likeButton.className = "likes-button";
@@ -86,7 +89,6 @@ function init() {
       infoDiv.appendChild(deletePostButton);
     }
 
-    
     infoDiv.appendChild(usernameH4);
     infoDiv.appendChild(textP);
     infoDiv.appendChild(timeP);
@@ -98,30 +100,27 @@ function init() {
 
     likesInnerContainerA.appendChild(likeButton);
     likesInnerContainerA.appendChild(removeLikeButton);
-    
 
-    if (post.likes.length > 0) {
+    if (post.likes && post.likes.length > 0) {
       const likesP = document.createElement("p");
       const likesSelect = document.createElement("select");
 
       likesSelect.className = "likes-select";
 
-      likesP.className = "likes-amount"
+      likesP.className = "likes-amount";
       likesP.innerText = `${post.likes.length}`;
 
       let firstOption = new Option("Liked By");
       likesSelect.appendChild(firstOption);
 
-      for(let like of post.likes) {
+      for (let like of post.likes) {
         let option = new Option(like.username, like.username);
         likesSelect.appendChild(option);
       }
 
-
       likesInnerContainerB.appendChild(likesP);
       likesInnerContainerD.appendChild(likesSelect);
     }
-
 
     likesInnerContainerC.appendChild(likesInnerContainerA);
 
@@ -132,19 +131,25 @@ function init() {
       likesInnerContainerC.style.height = "100%";
     } else {
       likesInnerContainerC.appendChild(likesInnerContainerB);
-    };
+    }
 
-    likesDiv.appendChild(likesInnerContainerC)
-    likesDiv.appendChild(likesInnerContainerD)
+    likesDiv.appendChild(likesInnerContainerC);
+    likesDiv.appendChild(likesInnerContainerD);
     //add to likes container
     postDiv.appendChild(infoDiv);
     postDiv.appendChild(likesDiv);
     postDiv.classList.add("post");
 
-    //apend everything to the main post list
-    postsDiv.appendChild(postDiv);
+    postDiv.setAttribute("data-post-id", post._id);
 
-    
+    //return post Div so it can be appended to the main post list
+    return postDiv;
+  }
+
+  function displayPost(post) {
+    const postDiv = buildPost(post);
+
+    postsDiv.appendChild(postDiv);
   }
 
   function loadPosts() {
@@ -165,16 +170,25 @@ function init() {
       });
   }
 
-  // function updatePage() {
-  //   // Get the current scroll position before reloading
-  //   const scrollPosition = window.scrollY;
+  function updatePage(postID) {
+    for (let postD of postsDiv.children) {
+      if (postD.getAttribute("data-post-id") == postID) {
+        const token = getToken();
 
-  //   // Reload the page
-  //   location.reload();
-
-  //   // Set the scroll position back to where it was after the reload
-  //   window.scrollTo(0, scrollPosition);
-  // }
+        fetch(`${apiBaseURL}/api/posts/${postID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            console.log("update");
+            postD.replaceWith(buildPost(data));
+          });
+      }
+    }
+  }
 
   function likePost(likeBtn) {
     const postID = likeBtn.getAttribute("data-post-id");
@@ -196,7 +210,7 @@ function init() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        // updatePage();
+        updatePage(postID);
       });
   }
 
@@ -212,11 +226,12 @@ function init() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      });
-      // .then((response) => response.json())
-      // .then((data) => {
-      //   console.log(data);
-      // });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          updatePage(postID);
+        });
     }
 
     fetch(`${apiBaseURL}/api/posts/${postID}`, {
@@ -232,7 +247,6 @@ function init() {
             deleteLike(like._id);
           }
         }
-        // updatePage();
       });
   }
 
@@ -247,20 +261,117 @@ function init() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        for (let postD of postsDiv.children) {
+          if (postD.getAttribute("data-post-id") == postID) {
+            postsDiv.removeChild(postD);
+          }
+        }
+      });
+  }
+
+  function clearPostsDiv() {
+    while (postsDiv.firstChild) {
+      postsDiv.removeChild(postsDiv.firstChild);
+    }
+  }
+
+  function displayPostsOldest(posts) {
+    for (let post of posts) {
+      postsDiv.prepend(buildPost(post));
+    }
+  }
+
+  function sortByLikes(posts) {
+    return posts.sort((a, b) => {
+      return b.likes.length - a.likes.length;
     });
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data);
-    // });
+  }
+
+  function sortByAlpha(posts) {
+    return posts.sort((a, b) => {
+      return a.username.toUpperCase().localeCompare(b.username.toUpperCase());
+    });
+  }
+
+  function loadUsernameSelect() {
+    const token = getToken();
+
+    fetch(`${apiBaseURL}/api/posts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let usernames = new Set(sortByAlpha(data).map((post) => post.username));
+
+        usernames.forEach((user) => {
+          let option = new Option(user, user);
+          usernameSelect.appendChild(option);
+        });
+      });
+  }
+
+  function getPostsToSort() {
+    if (sortBySelect.value != "") {
+      clearPostsDiv();
+
+      const token = getToken();
+
+      fetch(`${apiBaseURL}/api/posts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (usernameSelect.value == "all") {
+            sortPosts(data);
+          } else {
+            sortPosts(refinePosts(data));
+          }
+        });
+    }
+  }
+
+  function sortPosts(posts) {
+    switch (sortBySelect.value) {
+      case "newest":
+        for (let post of posts) {
+          displayPost(post);
+        }
+        break;
+      case "oldest":
+        displayPostsOldest(posts);
+        break;
+      case "most-likes":
+        sortByLikes(posts).forEach((post) => {
+          displayPost(post);
+        });
+        break;
+      case "username":
+        sortByAlpha(posts).forEach((post) => {
+          displayPost(post);
+        });
+        break;
+    }
+  }
+
+  function refinePosts(posts) {
+    return posts.filter((post) => post.username == usernameSelect.value);
   }
 
   //event listeners
   logOutButton.addEventListener("click", logout);
-  // likeButton.addEventListener("click", likePost)
-  // removeLikeButton.addEventListener("click", removeLikePost)
+  sortBySelect.addEventListener("change", getPostsToSort);
+  usernameSelect.addEventListener("change", getPostsToSort);
 
   //call functions onload
   loadPosts();
+  loadUsernameSelect();
 }
 
 window.onload = init;
