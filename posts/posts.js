@@ -93,18 +93,19 @@ function init() {
     infoDiv.appendChild(textP);
 
     // Regular expression to extract the image URL
-    const imageUrlRegex = /(https?:\/\/[^\s]+)/;
-    const match = post.text.match(imageUrlRegex);
+    const imageUrlRegex = /(https?:\/\/[^\s]+)/g;
+    const matches = post.text.match(imageUrlRegex);
 
-    if (match && match[1]) {
-      const imageUrl = match[1];
+    console.log(matches);
 
-      const postImg = document.createElement("img");
-
-      postImg.className = "post-image";
-      postImg.src = imageUrl;
-      infoDiv.appendChild(postImg);
-    } 
+    if (matches) {
+      matches.forEach((imageUrl) => {
+        const postImg = document.createElement("img");
+        postImg.className = "post-image";
+        postImg.src = imageUrl;
+        infoDiv.appendChild(postImg);
+      });
+    }
 
     infoDiv.appendChild(timeP);
 
