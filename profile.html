@@ -175,25 +175,9 @@
       <div class="user-info-container">
         <div class="user-info">
           <button id="edit-button">Edit</button>
-          <button style="display: none;" id="cancel-edit-button">Cancel</button>
+          
 
-          <div style="display: none" id="edit-user-info-div">
-            <form id="edit-form">
-              <label for="username-display-p">Username:</label>
-              <p id="username-display-p"></p>
-
-              <label for="name-input">Full Name:</label>
-              <input type="text" id="name-input">
-
-              <label for="bio-textarea">Bio:</label>
-              <textarea name="" id="bio-textarea" cols="30" rows="10"></textarea>
-
-              <label for="password-input">Enter Password:</label>
-              <input type="password" id="password-input">
-
-              <button id="save-user-info-button" type="button">Save Changes</button>
-            </form>
-          </div>
+          
           
           <div id="user-info-div">
             <p id="username"></p>
@@ -206,7 +190,7 @@
 
           
           
-          <br>
+          
           <select name="sort-by" id="sort-by-select">
             <option value="">Sort by...</option>
             <option value="newest">Newest</option>
@@ -220,13 +204,42 @@
     </div>
 
 
-    <div class="create-post-modal">
+    <div class="create-post-modal" id="create-post-modal">
       <div class="create-post-container">
         <h3>Whats On Your Mind...?</h3>
         <textarea class="create-textarea" name="new-post" id="new-post-textarea" cols="30" rows="10" placeholder="Type Here..."></textarea>
         <div>
           <button id="cancel-post-button">Cancel</button>
           <button id="create-post-button">Post</button>
+        </div>
+        
+      </div>
+    </div>
+
+
+    <div class="create-post-modal" id="edit-account-details">
+      <div class="create-post-container" style="width: 25%;">
+        <h3>Update Your Info</h3>
+        <div id="edit-user-info-div" style="width: 90%">
+          <form id="edit-form" style="width: 50%;">
+            <label for="username-display-p">Username:</label>
+            <p id="username-display-p"></p>
+
+            <label for="name-input">Full Name:</label>
+            <input type="text" id="name-input">
+
+            <label for="bio-textarea">Bio:</label>
+            <textarea name="" id="bio-textarea" cols="30" rows="10"></textarea>
+
+            <label for="password-input">Enter Password:</label>
+            <input type="password" id="password-input">
+
+            <div style="margin-top: 1rem;">
+              <button id="cancel-edit-button">Cancel</button>
+              <button id="save-user-info-button" type="button">Save Changes</button>
+            </div>
+            
+          </form>
         </div>
         
       </div>
