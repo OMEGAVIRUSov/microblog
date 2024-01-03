@@ -73,16 +73,16 @@ function buildPost(post) {
 
   // Regular expression to extract the image URL
   const imageUrlRegex = /(https?:\/\/[^\s]+)/g;
-  const matches = post.text.match(imageUrlRegex);
+  const mediaUrls = post.text.match(imageUrlRegex);
 
-  console.log(matches);
+  console.log(mediaUrls);
 
-  if (matches) {
-    matches.forEach((imageUrl) => {
-      const postImg = document.createElement("img");
-      postImg.className = "post-image";
-      postImg.src = imageUrl;
-      infoDiv.appendChild(postImg);
+  if (mediaUrls) {
+    mediaUrls.forEach((url) => {
+      const elem = getMediaElem(url);
+      if (elem) {
+        infoDiv.appendChild(getMediaElem(url));
+      }
     });
   }
 
@@ -347,4 +347,60 @@ function refinePosts(posts) {
     userName = getUserName();
   }
   return posts.filter((post) => post.username == userName);
+}
+
+function getMediaElem(url) {
+  if (isYouTubeLink(url)) {
+    // Handle YouTube link as a video
+    const videoId = getYouTubeVideoId(url);
+
+    if (videoId) {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube.com/embed/${getYouTubeVideoId(url)}`;
+
+      iframe.className = "post-image";
+
+      return iframe;
+    } else {
+      return null;
+    }
+  } else if (isVideo(url)) {
+    // Handle other video formats
+    const video = document.createElement("video");
+
+    video.src = url;
+    video.className = "post-image";
+
+    return videoElement;
+//   } else if (isImage(url)) {
+    // Handle image
+  } else {
+    const img = document.createElement("img");
+
+    img.src = url;
+    img.className = "post-image";
+
+    return img;
+//   } else {
+//     return null;
+  }
+}
+
+function isYouTubeLink(url) {
+  return url.includes("youtube.com");
+}
+
+function getYouTubeVideoId(url) {
+  const match = url.match(/[?&]v=([^&]+)/);
+  return match ? match[1] : null;
+}
+
+function isVideo(url) {
+  const videoExtensions = [".mp4", ".webm", ".avi"]; // Add more video extensions as needed
+  return videoExtensions.some((ext) => url.endsWith(ext));
+}
+
+function isImage(url) {
+  const imageExtensions = [".jpg", ".png", ".gif"]; // Add more image extensions as needed
+  return imageExtensions.some((ext) => url.endsWith(ext));
 }
