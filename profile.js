@@ -27,7 +27,8 @@ function init() {
 
   const sortBySelect = document.querySelector("#sort-by-select");
 
-  const createPostModal = document.querySelector(".create-post-modal");
+  const createPostModal = document.querySelector("#create-post-modal");
+  const editAccountDetailsModal = document.querySelector("#edit-account-details");
 
   // functions
   function getUserInfoToDisplay() {
@@ -141,19 +142,22 @@ function init() {
   function showEditUserInfo() {
     getUserInfoToEdit();
 
-    userInfoDiv.style.display = "none";
+    editAccountDetailsModal.style.display = "flex";
+    /* userInfoDiv.style.display = "none";
     editButton.style.display = "none";
 
     cancelEditButton.style.display = "block";
-    editUserInfoDiv.style.display = "block";
+    editUserInfoDiv.style.display = "block"; */
   }
 
   function hideEditUserInfo() {
-    cancelEditButton.style.display = "none";
+    editAccountDetailsModal.style.display = "none";
+
+    /* cancelEditButton.style.display = "none";
     editUserInfoDiv.style.display = "none";
 
     userInfoDiv.style.display = "block";
-    editButton.style.display = "block";
+    editButton.style.display = "block"; */
   }
 
   function buildUser() {
