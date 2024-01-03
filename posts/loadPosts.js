@@ -31,7 +31,7 @@ function buildPost(post) {
 
   postDiv.appendChild(profileIcon);
 
-  usernameH4.innerText = `${post.username}:`;
+  usernameH4.innerText = `@${post.username}:`;
   textP.innerText = post.text;
   textP.className = "post-text";
   timeP.innerText = new Date(post.createdAt).toLocaleString();
