@@ -9,6 +9,8 @@
       body {
         width: 100%;
         height: 100vh;
+        margin: 0px;
+        padding: 0px;
         display: flex;
         justify-content: center;
         background-color: #85989aff;
@@ -112,6 +114,45 @@
       }
           
 
+      .create-post-modal {
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100vh;
+        margin: 0px;
+        padding: 0px;
+        position: absolute;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .create-post-container {
+        width: 40%;
+        height: 50%;
+        background-color: white;
+        border-radius: 40px;
+        border: 2px solid gray;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .create-title {
+        width: 100%;
+        height: auto;
+        text-align: center;
+      }
+
+      .create-textarea {
+        margin: 2rem;
+        width: 80%;
+        height: 50%;
+      }
+
+      .button-container {
+        width: 100%;
+        height: auto;
+      }
     </style>
     
     <!-- Run BEFORE page is finished loading (before window.onload): -->
@@ -161,9 +202,10 @@
           </div>
 
           <button id="show-new-post-button">Create Post</button>
-          <button id="cancel-post-button" style="display: none">Cancel</button>
-          <textarea name="new-post" id="new-post-textarea" cols="30" rows="10" style="display: none"></textarea>
-          <button id="create-post-button" style="display: none">Post</button>
+          
+
+          
+          
           <br>
           <select name="sort-by" id="sort-by-select">
             <option value="">Sort by...</option>
@@ -176,6 +218,21 @@
         </div>
       </div>
     </div>
+
+
+    <div class="create-post-modal">
+      <div class="create-post-container">
+        <h3>Whats On Your Mind...?</h3>
+        <textarea class="create-textarea" name="new-post" id="new-post-textarea" cols="30" rows="10" placeholder="Type Here..."></textarea>
+        <div>
+          <button id="cancel-post-button">Cancel</button>
+          <button id="create-post-button">Post</button>
+        </div>
+        
+      </div>
+    </div>
+
+
     <script src="posts/loadPosts.js"></script>
     <script src="profile.js"></script>
   </body>
