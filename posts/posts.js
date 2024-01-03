@@ -91,6 +91,20 @@ function init() {
 
     infoDiv.appendChild(usernameH4);
     infoDiv.appendChild(textP);
+
+    // Regular expression to extract the image URL
+    const imageUrlRegex = /(https?:\/\/[^\s]+)/;
+    const match = post.text.match(imageUrlRegex);
+
+    if (match && match[1]) {
+      const imageUrl = match[1];
+
+      const postImg = document.createElement("img");
+      postImg.className = "post-image";
+      postImg.src = imageUrl;
+      infoDiv.appendChild(postImg);
+    } 
+
     infoDiv.appendChild(timeP);
 
     likesInnerContainerA.className = "likes-inner-container";

@@ -27,7 +27,7 @@ function init() {
 
   const sortBySelect = document.querySelector("#sort-by-select");
 
-  //functions
+  // functions
   function getUserName() {
     let userData = getLoginData();
 

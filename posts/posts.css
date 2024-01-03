@@ -160,3 +160,7 @@ opacity: 0.5;
 .post-text {
   text-wrap: wrap;
 }
+
+.post-image {
+  max-height: 25rem;
+}
