@@ -372,9 +372,9 @@ function getMediaElem(url) {
     video.className = "post-image";
 
     return videoElement;
-//   } else if (isImage(url)) {
+  } else if (isImage(url)) {
     // Handle image
-  } else {
+//   } else {
     const img = document.createElement("img");
 
     img.src = url;
@@ -396,11 +396,11 @@ function getYouTubeVideoId(url) {
 }
 
 function isVideo(url) {
-  const videoExtensions = [".mp4", ".webm", ".avi"]; // Add more video extensions as needed
+  const videoExtensions = [".mp4", ".webm", ".avi"];
   return videoExtensions.some((ext) => url.endsWith(ext));
 }
 
 function isImage(url) {
-  const imageExtensions = [".jpg", ".png", ".gif"]; // Add more image extensions as needed
+  const imageExtensions = [".jpg", ".png", ".gif"];
   return imageExtensions.some((ext) => url.endsWith(ext));
 }

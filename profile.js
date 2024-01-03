@@ -89,6 +89,8 @@ function init() {
       text: newPostTextarea.value,
     };
 
+    hideTextarea();
+
     clearTextarea();
 
     savePost(post);
