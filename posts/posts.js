@@ -100,6 +100,7 @@ function init() {
       const imageUrl = match[1];
 
       const postImg = document.createElement("img");
+
       postImg.className = "post-image";
       postImg.src = imageUrl;
       infoDiv.appendChild(postImg);
