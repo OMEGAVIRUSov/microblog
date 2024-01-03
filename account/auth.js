@@ -78,3 +78,16 @@ function logout() {
       window.location.assign("/"); // redirect back to landing page
     });
 }
+
+function getUserName() {
+  let userData = getLoginData();
+
+  return userData.username;
+}
+
+function getToken() {
+  let userData = getLoginData();
+
+  console.log(userData);
+  return userData.token;
+}
