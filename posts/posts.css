@@ -1,13 +1,17 @@
 /* Posts Page CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
 body {
-  background-color: #85989aff;
+  background-color: #e4e9e9;
   display: flex;
-  font-size: large;
+  font-size: 1rem;
   margin: 0px;
   padding: 0px;
   /*can be switched ot anything, yall can decide*/
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   overflow-y: hidden;
+  line-height: 1.5rem;
 }
 
 .main {
@@ -21,14 +25,12 @@ body {
 }
 
 .post {
-  width: 80%;
+  width: 60%;
   border-radius: 25px;
-  border-top-left-radius: 150px;
-  border-bottom-left-radius: 150px;
-  border: 5px solid #b7b7b7;
-  margin: 1rem;
+  border: 2px solid #b7b7b7;
+  margin: 0.5rem;
   background-color: white;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
 }
@@ -41,19 +43,19 @@ body {
   padding-bottom: 5rem;
   align-items: center;
   margin: 0px;
-  border-left: 3px solid white;
+  border-left: 1px solid white;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
 .likes-button {
-width: 3rem;
-height: 3rem;
+width: 1.8rem;
+height: 1.8rem;
 padding: 0px;
 border: none;
 background-color: transparent;
 border-radius: 4px;
-margin: 0.7rem;
+margin: 0.4rem;
 }
 
 .likes-button:hover {
@@ -61,7 +63,8 @@ opacity: 0.5;
 }
 
 .post-profile-icon {
-height: 15rem;
+height: 4rem;
+margin-left: 1.5rem;
 }
 
 
@@ -76,11 +79,11 @@ text-overflow: ellipsis;
 
 .likes-container {
   width: auto;
-  height: 80%;
+  height: 60%;
   max-height: 17rem;
   display: flex;
   flex-wrap: wrap;
-  border: 3px solid #85989aff;
+  border: 1px solid #85989aff;
   border-radius: 20px;
   }
 
@@ -126,15 +129,21 @@ height: 10vh;
 display: flex;
 align-items: center;
 justify-content: center;
-background-color: rgb(172, 190, 192);
+background-color: #ccd4d5;
 margin: 0px;
-border-left: 3px solid white;
-border-bottom: 3px solid white;
+border-left: 1px solid white;
+border-bottom: 1px solid white;
+font-family: 'Fredoka One', cursive;
+font-weight: 100;
+
 }
 
 .nav-bar {
-width: 7%;
+width: 5%;
+padding-left: 1rem;
+padding-right: 1rem;
 padding-top: 1.5rem;
+background-color: #85989a;
 }
 
 .nav-icon {
