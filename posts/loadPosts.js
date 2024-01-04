@@ -479,10 +479,10 @@ function getYouTubeVideoId(url) {
 
 function isVideo(url) {
   const videoExtensions = [".mp4", ".webm", ".avi"];
-  return videoExtensions.some((ext) => url.endsWith(ext));
+  return videoExtensions.some((ext) => url.includes(ext));
 }
 
 function isImage(url) {
   const imageExtensions = [".jpg", ".png", ".gif"];
-  return imageExtensions.some((ext) => url.endsWith(ext));
+  return imageExtensions.some((ext) => url.includes(ext));
 }
