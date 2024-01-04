@@ -24,29 +24,67 @@
   </head>
   <body>
     <header class="nav-bar">
+      <h1 class="posts-title">Main Feed</h1>
+      <div style="width: 75%;"></div>
       <a class="nav-icon" href="../profile.html"><img style="width: 80%;" src="/assets/navProfileIcon.svg" alt=""></a>
       <a class="nav-icon" id="log-out-button"><img style="width: 80%;" src="/assets/logoutIcon.svg" alt=""></a>
     </header>
 
     <main class="main">
-      <h1 class="posts-title">Main Feed</h1>
-      <select name="sort-by" id="sort-by-select">
-        <option value="">Sort by...</option>
-        <option value="newest">Newest</option>
-        <option value="oldest">Oldest</option>
-        <option value="most-likes">Most Liked</option>
-        <option value="username">Username</option>
-      </select>
-      <br>
-      <select name="usernames" id="username-select">
-        <option value="all">All Users...</option>
-      </select>
-      <div id="posts-div" class="user-posts-container">
+      
+      <div class="side-column">
+        <div class="side-box">
+        <select name="sort-by" id="sort-by-select">
+          <option value="">Sort by...</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="most-likes">Most Liked</option>
+          <option value="username">Username</option>
+        </select>
+        <select name="usernames" id="username-select">
+          <option value="all">All Users...</option>
+        </select>
+      </div>
+      </div>
+      
+      
+     
+      
+      <div class="central-column">
+        <div id="posts-div" class="user-posts-container">
+
+        </div>
+      </div>
+
+      <div class="side-column">
+        <div class="side-box">
+        </div>
+        <button class="generic-button" id="show-new-post-button">Create Post</button>
 
       </div>
+      
+      
     </main>
 
-       <footer></footer>
+       <footer>
+        
+       </footer>
+
+
+
+
+
+       <div class="create-post-modal" id="create-post-modal">
+        <div class="create-post-container">
+          <h3>Whats On Your Mind...?</h3>
+          <textarea class="create-textarea" name="new-post" id="new-post-textarea" cols="30" rows="10" placeholder="Type Here..."></textarea>
+          <div>
+            <button id="cancel-post-button">Cancel</button>
+            <button id="create-post-button">Post</button>
+          </div>
+          
+        </div>
+      </div>
 
     <!-- Page-specific code -->
     <script src="../global.js"></script>

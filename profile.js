@@ -9,15 +9,11 @@ function init() {
 
   const postsDiv = document.querySelector("#posts-div");
 
-  const showNewPostButton = document.querySelector("#show-new-post-button");
-  const cancelPostButton = document.querySelector("#cancel-post-button");
-  const newPostTextarea = document.querySelector("#new-post-textarea");
-  const createPostButton = document.querySelector("#create-post-button");
+
 
   const editButton = document.querySelector("#edit-button");
   const cancelEditButton = document.querySelector("#cancel-edit-button");
-  const userInfoDiv = document.querySelector("#user-info-div");
-  const editUserInfoDiv = document.querySelector("#edit-user-info-div");
+
   const saveUserInfoButton = document.querySelector("#save-user-info-button");
 
   const usernameDisplayP = document.querySelector("#username-display-p");
@@ -27,7 +23,7 @@ function init() {
 
   const sortBySelect = document.querySelector("#sort-by-select");
 
-  const createPostModal = document.querySelector("#create-post-modal");
+
   const editAccountDetailsModal = document.querySelector("#edit-account-details");
 
   // functions
@@ -54,67 +50,9 @@ function init() {
     bioP.innerText = user.bio;
   }
 
-  function displayPostFirst(post) {
-    const postDiv = buildPost(post);
 
-    postsDiv.prepend(postDiv);
-  }
 
-  //toggle Create Post functions
-  function clearTextarea() {
-    newPostTextarea.value = "";
-  }
-
-  function showTextarea() {
-    /* showNewPostButton.style.display = "none";
-    cancelPostButton.style.display = "block";
-    newPostTextarea.style.display = "block";
-    createPostButton.style.display = "block"; */
-
-    createPostModal.style.display = "flex";
-  }
-
-  function hideTextarea() {
-    clearTextarea();
-    /* showNewPostButton.style.display = "block";
-    cancelPostButton.style.display = "none";
-    newPostTextarea.style.display = "none";
-    createPostButton.style.display = "none"; */
-
-    createPostModal.style.display = "none";
-  }
-
-  //create post functions
-  function createPost() {
-    const post = {
-      text: newPostTextarea.value,
-    };
-
-    hideTextarea();
-
-    clearTextarea();
-
-    savePost(post);
-  }
-
-  function savePost(post) {
-    const token = getToken();
-
-    fetch(`${apiBaseURL}/api/posts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(post),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        displayPostFirst(data);
-      });
-  }
-
+  
   //edit user information functions
   function populateEditForm(user) {
     usernameDisplayP.innerText = user.username;
@@ -197,9 +135,9 @@ function init() {
 
   //add event listeners
   logOutButton.addEventListener("click", logout);
-  createPostButton.addEventListener("click", createPost);
-  showNewPostButton.addEventListener("click", showTextarea);
-  cancelPostButton.addEventListener("click", hideTextarea);
+  
+  
+  
   saveUserInfoButton.addEventListener("click", updateUser);
   editButton.addEventListener("click", showEditUserInfo);
   cancelEditButton.addEventListener("click", hideEditUserInfo);
