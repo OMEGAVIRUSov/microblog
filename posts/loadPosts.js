@@ -60,14 +60,13 @@ function buildPost(post) {
   removeLikeButton.appendChild(unlikeButtonImg);
 
   infoDiv.appendChild(usernameH4);
-  //infoDiv.appendChild(textP);
 
   // Media code
   //
   const mediaDiv = document.createElement("div");
   mediaDiv.setAttribute("data-post-id", post._id);
 
-  const mediaNavDiv = document.createElement("div");
+  //   const mediaNavDiv = document.createElement("div");
 
   // Regular expression to extract the media URL
   const imageUrlRegex = /(https?:\/\/[^\s]+)/g;
@@ -80,16 +79,28 @@ function buildPost(post) {
 
   currentIndex = 0;
 
+  let urlList = [];
+
   if (mediaUrls) {
     mediaUrls.forEach((url) => {
       const elem = getMediaElem(url);
       if (elem) {
         mediaElemObj.array.push(getMediaElem(url));
+        urlList.push(url);
       }
     });
   }
 
-  if (mediaElemObj.array.length > 0) {
+  //appends the text that is not a url
+  if (urlList.length) {
+    urlList.forEach((url) => {
+      textP.innerText = textP.innerText.replace(url, "");
+    });
+  }
+
+  infoDiv.appendChild(textP);
+
+  if (mediaElemObj.array.length) {
     mediaDiv.appendChild(mediaElemObj.array[currentIndex]);
   }
 
@@ -119,26 +130,16 @@ function buildPost(post) {
     showMedia(currentIndex);
   });
 
-  
-
-//only appends text if its not an image
-  if (mediaElemObj.array.length) {
-    //do nothing
-  } else {
-    infoDiv.appendChild(textP);
-  }
   const multiMediaDiv = document.createElement("div");
   multiMediaDiv.className = "multi-media-div";
 
   if (mediaElemObj.array.length > 1) {
-    
     multiMediaDiv.appendChild(previousButton);
     multiMediaDiv.appendChild(mediaDiv);
     multiMediaDiv.appendChild(nextButton);
 
     infoDiv.appendChild(multiMediaDiv);
   } else {
-    
     infoDiv.appendChild(mediaDiv);
   }
   //
@@ -205,7 +206,6 @@ function buildPost(post) {
 
   likesDiv.appendChild(likesInnerContainerC);
   likesDiv.appendChild(likesInnerContainerD);
-
 
   //add to likes container
   postDiv.appendChild(infoDiv);
@@ -323,7 +323,6 @@ function removeLikePost(removeLikeBtn) {
 
 function deletePost(deleteButton) {
   if (confirm("Are you sure you want to delete this post?")) {
-    
     const postID = deleteButton.getAttribute("data-post-id");
 
     const token = getToken();
@@ -463,8 +462,8 @@ function getMediaElem(url) {
     img.className = "post-image";
 
     return img;
-      } else {
-        return null;
+  } else {
+    return null;
   }
 }
 
