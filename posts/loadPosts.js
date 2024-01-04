@@ -3,6 +3,8 @@ const postsDiv = document.querySelector("#posts-div");
 const sortBySelect = document.querySelector("#sort-by-select");
 const usernameSelect = document.querySelector("#username-select");
 
+
+
 function buildPost(post) {
   const postDiv = document.createElement("div");
   const infoDiv = document.createElement("div");
@@ -14,16 +16,16 @@ function buildPost(post) {
   const usernameH4 = document.createElement("h4");
   const textP = document.createElement("p");
   const timeP = document.createElement("p");
-
   const likeButton = document.createElement("button");
   const removeLikeButton = document.createElement("button");
+  
 
   const likeButtonImg = document.createElement("img");
   const unlikeButtonImg = document.createElement("img");
 
   const profileIcon = document.createElement("img");
   profileIcon.addEventListener("click", function () {
-    //redirect to user page eventually
+    window.location.href = "/profile.html"
   });
 
   infoDiv.className = "info-div";
@@ -45,6 +47,8 @@ function buildPost(post) {
   likeButton.setAttribute("data-post-id", post._id);
   likeButton.addEventListener("click", function () {
     likePost(this);
+    likeButton.style.display = "none";
+    removeLikeButton.style.display = "block";
   });
 
   likeButton.appendChild(likeButtonImg);
@@ -55,6 +59,8 @@ function buildPost(post) {
   removeLikeButton.setAttribute("data-post-id", post._id);
   removeLikeButton.addEventListener("click", function () {
     removeLikePost(this);
+    likeButton.style.display = "block";
+    removeLikeButton.style.display = "none";
   });
 
   removeLikeButton.appendChild(unlikeButtonImg);
@@ -152,10 +158,10 @@ function buildPost(post) {
   likesInnerContainerC.className = "likes-inner-container-header";
   likesInnerContainerD.className = "likes-inner-container-footer";
 
-  likesInnerContainerA.appendChild(likeButton);
-  likesInnerContainerA.appendChild(removeLikeButton);
+ 
 
   if (post.likes && post.likes.length > 0) {
+    let wasIn = false;
     const likesP = document.createElement("p");
     const likesSelect = document.createElement("select");
 
@@ -170,12 +176,26 @@ function buildPost(post) {
     for (let like of post.likes) {
       let option = new Option(like.username, like.username);
       likesSelect.appendChild(option);
+
+      if (getUserName() == like.username) {  
+        wasIn = true;
+      }
+
+      if (wasIn == true) {
+        likesInnerContainerA.appendChild(removeLikeButton);
+      } else {
+        likesInnerContainerA.appendChild(likeButton);
+      }
     }
 
+    
     likesInnerContainerB.appendChild(likesP);
     likesInnerContainerD.appendChild(likesSelect);
   }
 
+  if (likesInnerContainerA.innerHTML == "") {
+    likesInnerContainerA.appendChild(likeButton);
+  }
   likesInnerContainerC.appendChild(likesInnerContainerA);
 
   if (likesInnerContainerB.innerHTML == "") {
@@ -283,6 +303,7 @@ function likePost(likeBtn) {
       console.log(data);
       updatePage(postID);
     });
+
 }
 
 function removeLikePost(removeLikeBtn) {
@@ -319,6 +340,7 @@ function removeLikePost(removeLikeBtn) {
         }
       }
     });
+
 }
 
 function deletePost(deleteButton) {
