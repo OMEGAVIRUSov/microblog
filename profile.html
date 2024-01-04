@@ -13,7 +13,7 @@
         padding: 0px;
         display: flex;
         justify-content: center;
-        background-color: #85989aff;
+        background-color: #e4e9e9;
         overflow-y: hidden;
         font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: large;
@@ -25,7 +25,7 @@
       }
 
       .main {
-        width: 90%;
+        width: 100%;
         height: 100%;
         margin: 0px;
         padding: 0px;
@@ -71,32 +71,55 @@
       }
 
       #bio {
-        width: 50%;
-        height: 10rem;
+        width: 90%;
+        height: 70%;
         border: 2px solid #85989aff;
         border-radius: 15px;
         margin: 1rem;
+        background-color: white;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: larger;
       }
       #username,
       #fullName {
-        width: 20%;
-        height: 3rem;
+        width: 50%;
+        height: 100%;
         border: 2px solid #85989aff;
         border-radius: 50px;
+        margin: 0.5rem;
+        text-align: center;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        font-size: larger;
+        padding: 0.5rem;
+      }
+      #user-info-div {
+        width: 50%;
+        height: 100%;
         margin: 1rem;
         text-align: center;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
 
-      .user-posts-container {
+      .user-posts-container-profile {
         width: 100%;
-        height: 90vh;
+        height: auto;
         display: flex;
         flex-direction: column;
         padding-bottom: 5rem;
         align-items: center;
         margin: 0px;
         border-left: 3px solid white;
-        overflow-y: scroll;
         overflow-x: hidden;
       }
 
@@ -164,26 +187,28 @@
     </script>
   </head>
   <body>
-    <div class="nav">
-      <a href="posts\posts.html">Posts</a>
-      <button id="log-out-button">Logout</button>
-    </div>
+    <header class="nav-bar">
+      <a class="nav-icon" href="posts\posts.html"><img style="width: 80%;" src="/assets/homeIcon.svg" alt=""></a>
+      <a class="nav-icon" id="log-out-button"><img style="width: 80%;" src="/assets/logoutIcon.svg" alt=""></a>
+    </header>
     <div class="main">
       <div class="banner">
-        <img class="pfp" src="https://placehold.co/500x500" />
+        <img class="pfp" src="/assets/profileIcon.svg" />
+        <div id="user-info-div">
+          <div style="display: flex; width: 80%; height: auto; margin: 1rem; align-items: center;">
+            <p id="username"></p>
+            <p id="fullName"></p>
+            <button id="edit-button">Edit Details</button>
+
+          </div>
+          
+          <p id="bio"></p>
+
+        </div>
       </div>
       <div class="user-info-container">
         <div class="user-info">
-          <button id="edit-button">Edit</button>
           
-
-          
-          
-          <div id="user-info-div">
-            <p id="username"></p>
-            <p id="fullName"></p>
-            <p id="bio"></p>
-          </div>
 
           <button id="show-new-post-button">Create Post</button>
           
@@ -198,7 +223,7 @@
             <option value="most-likes">Most Liked</option>
           </select>
 
-          <div id="posts-div" class="user-posts-container"></div>
+          <div id="posts-div" class="user-posts-container-profile"></div>
         </div>
       </div>
     </div>
@@ -245,8 +270,9 @@
       </div>
     </div>
 
-
+    <script src="global.js"></script>
     <script src="posts/loadPosts.js"></script>
     <script src="profile.js"></script>
+
   </body>
 </html>

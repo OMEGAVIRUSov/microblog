@@ -22,6 +22,9 @@ function buildPost(post) {
   const unlikeButtonImg = document.createElement("img");
 
   const profileIcon = document.createElement("img");
+  profileIcon.addEventListener("click", function () {
+    //redirect to user page eventually
+  });
 
   infoDiv.className = "info-div";
   likesDiv.className = "likes-container";
@@ -56,20 +59,8 @@ function buildPost(post) {
 
   removeLikeButton.appendChild(unlikeButtonImg);
 
-  if (post.username == getUserName()) {
-    const deletePostButton = document.createElement("button");
-
-    deletePostButton.textContent = `Delete Post`;
-    deletePostButton.setAttribute("data-post-id", post._id);
-    deletePostButton.addEventListener("click", function () {
-      deletePost(this);
-    });
-
-    infoDiv.appendChild(deletePostButton);
-  }
-
   infoDiv.appendChild(usernameH4);
-  infoDiv.appendChild(textP);
+  //infoDiv.appendChild(textP);
 
   // Media code
   //
@@ -111,7 +102,8 @@ function buildPost(post) {
   }
 
   const nextButton = document.createElement("button");
-  nextButton.textContent = "Next";
+  nextButton.textContent = ">";
+  nextButton.className = "scroll-images-button";
   nextButton.setAttribute("data-post-id", post._id);
   nextButton.addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % mediaElemObj.array.length;
@@ -119,21 +111,36 @@ function buildPost(post) {
   });
 
   const previousButton = document.createElement("button");
-  previousButton.textContent = "Previous";
+  previousButton.textContent = "<";
+  previousButton.className = "scroll-images-button";
   previousButton.setAttribute("data-post-id", post._id);
   previousButton.addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + mediaElemObj.array.length) % mediaElemObj.array.length;
     showMedia(currentIndex);
   });
 
-  if (mediaElemObj.array.length > 1) {
-    mediaNavDiv.appendChild(previousButton);
-    mediaNavDiv.appendChild(nextButton);
+  
 
-    mediaDiv.appendChild(mediaNavDiv);
+//only appends text if its not an image
+  if (mediaElemObj.array.length) {
+    //do nothing
+  } else {
+    infoDiv.appendChild(textP);
   }
+  const multiMediaDiv = document.createElement("div");
+  multiMediaDiv.className = "multi-media-div";
 
-  infoDiv.appendChild(mediaDiv);
+  if (mediaElemObj.array.length > 1) {
+    
+    multiMediaDiv.appendChild(previousButton);
+    multiMediaDiv.appendChild(mediaDiv);
+    multiMediaDiv.appendChild(nextButton);
+
+    infoDiv.appendChild(multiMediaDiv);
+  } else {
+    
+    infoDiv.appendChild(mediaDiv);
+  }
   //
   // End of media code
 
@@ -179,8 +186,27 @@ function buildPost(post) {
     likesInnerContainerC.appendChild(likesInnerContainerB);
   }
 
+  if (post.username == getUserName()) {
+    const deletePostButton = document.createElement("button");
+    const deletePostIcon = document.createElement("img");
+
+    deletePostIcon.src = "/assets/trashIcon (1).svg";
+    deletePostButton.className = `delete-button`;
+
+    deletePostButton.setAttribute("data-post-id", post._id);
+    deletePostButton.addEventListener("click", function () {
+      deletePost(this);
+    });
+
+    deletePostButton.appendChild(deletePostIcon);
+    likesInnerContainerA.appendChild(deletePostButton);
+    likesDiv.style.height = "11rem";
+  }
+
   likesDiv.appendChild(likesInnerContainerC);
   likesDiv.appendChild(likesInnerContainerD);
+
+
   //add to likes container
   postDiv.appendChild(infoDiv);
   postDiv.appendChild(likesDiv);
@@ -296,25 +322,30 @@ function removeLikePost(removeLikeBtn) {
 }
 
 function deletePost(deleteButton) {
-  const postID = deleteButton.getAttribute("data-post-id");
+  if (confirm("Are you sure you want to delete this post?")) {
+    
+    const postID = deleteButton.getAttribute("data-post-id");
 
-  const token = getToken();
+    const token = getToken();
 
-  fetch(`${apiBaseURL}/api/posts/${postID}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      for (let postD of postsDiv.children) {
-        if (postD.getAttribute("data-post-id") == postID) {
-          postsDiv.removeChild(postD);
+    fetch(`${apiBaseURL}/api/posts/${postID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        for (let postD of postsDiv.children) {
+          if (postD.getAttribute("data-post-id") == postID) {
+            postsDiv.removeChild(postD);
+          }
         }
-      }
-    });
+      });
+  } else {
+    //do nothing
+  }
 }
 
 function clearPostsDiv() {

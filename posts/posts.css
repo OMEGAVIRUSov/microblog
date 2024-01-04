@@ -62,6 +62,7 @@ margin: 0.4rem;
 opacity: 0.5;
 }
 
+
 .post-profile-icon {
 height: 4rem;
 margin-left: 1.5rem;
@@ -79,8 +80,8 @@ text-overflow: ellipsis;
 
 .likes-container {
   width: auto;
-  height: 60%;
-  max-height: 17rem;
+  height: 9rem;
+  max-height: 13rem;
   display: flex;
   flex-wrap: wrap;
   border: 1px solid #85989aff;
@@ -131,8 +132,6 @@ align-items: center;
 justify-content: center;
 background-color: #ccd4d5;
 margin: 0px;
-border-left: 1px solid white;
-border-bottom: 1px solid white;
 font-family: 'Fredoka One', cursive;
 font-weight: 100;
 
