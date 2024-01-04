@@ -71,20 +71,71 @@ function buildPost(post) {
   infoDiv.appendChild(usernameH4);
   infoDiv.appendChild(textP);
 
-  // Regular expression to extract the image URL
+  // Media code
+  //
+  const mediaDiv = document.createElement("div");
+  mediaDiv.setAttribute("data-post-id", post._id);
+
+  const mediaNavDiv = document.createElement("div");
+
+  // Regular expression to extract the media URL
   const imageUrlRegex = /(https?:\/\/[^\s]+)/g;
   const mediaUrls = post.text.match(imageUrlRegex);
 
-  console.log(mediaUrls);
+  const mediaElemObj = {
+    postId: post._id,
+    array: [],
+  };
+
+  currentIndex = 0;
 
   if (mediaUrls) {
     mediaUrls.forEach((url) => {
       const elem = getMediaElem(url);
       if (elem) {
-        infoDiv.appendChild(getMediaElem(url));
+        mediaElemObj.array.push(getMediaElem(url));
       }
     });
   }
+
+  if (mediaElemObj.array.length > 0) {
+    mediaDiv.appendChild(mediaElemObj.array[currentIndex]);
+  }
+
+  console.log(mediaUrls);
+
+  console.log(mediaElemObj.array);
+
+  function showMedia(index) {
+    mediaDiv.firstChild.replaceWith(mediaElemObj.array[index]);
+  }
+
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "Next";
+  nextButton.setAttribute("data-post-id", post._id);
+  nextButton.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % mediaElemObj.array.length;
+    showMedia(currentIndex);
+  });
+
+  const previousButton = document.createElement("button");
+  previousButton.textContent = "Previous";
+  previousButton.setAttribute("data-post-id", post._id);
+  previousButton.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + mediaElemObj.array.length) % mediaElemObj.array.length;
+    showMedia(currentIndex);
+  });
+
+  if (mediaElemObj.array.length > 1) {
+    mediaNavDiv.appendChild(previousButton);
+    mediaNavDiv.appendChild(nextButton);
+
+    mediaDiv.appendChild(mediaNavDiv);
+  }
+
+  infoDiv.appendChild(mediaDiv);
+  //
+  // End of media code
 
   infoDiv.appendChild(timeP);
 
@@ -374,15 +425,15 @@ function getMediaElem(url) {
     return videoElement;
   } else if (isImage(url)) {
     // Handle image
-//   } else {
+    //   } else {
     const img = document.createElement("img");
 
     img.src = url;
     img.className = "post-image";
 
     return img;
-//   } else {
-//     return null;
+      } else {
+        return null;
   }
 }
 
