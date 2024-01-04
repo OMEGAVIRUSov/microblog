@@ -1,92 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="https://cdn.glitch.global/ffadf923-a4f9-429d-8f67-57ba6483f9d2/AndromedaFinal%20(2).png?v=1690842384037"> 
-    <meta name="description" content="social media platform made by a freak of nature">
-    <meta property="og:image:width" content="54"> 
-    <meta property="og:image:height" content="54"> 
-    <link rel="icon" type="image/png" sizes="256x256" href="https://cdn.glitch.global/ffadf923-a4f9-429d-8f67-57ba6483f9d2/AndromedaFinal%20(2).png?v=1690842384037">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/ffadf923-a4f9-429d-8f67-57ba6483f9d2/AndromedaFinal%20(2).png?v=1690842384037"
+    />
+    <meta name="description" content="social media platform made by a freak of nature" />
+    <meta property="og:image:width" content="54" />
+    <meta property="og:image:height" content="54" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="256x256"
+      href="https://cdn.glitch.global/ffadf923-a4f9-429d-8f67-57ba6483f9d2/AndromedaFinal%20(2).png?v=1690842384037"
+    />
     <title>Astar</title>
-    
-    <link rel="stylesheet" href="sign-in.css">
-    
-</head>
-<body>
+
+    <link rel="stylesheet" href="sign-in.css" />
+  </head>
+  <body>
     <!--Header -->
-<header>
-    <h1 style="color: white;">Welcome to Astar</h1>
-</header>
 
     <!-- half of the screen with the logo -->
     <div class="page-half-A" id="page-half-A">
-        <img id="logo" style="height: 75%; margin-left: 15%" src="images/microblogLogo (2).svg" alt="">
+      <!-- <header>
+        <h1 style="color: white", >Welcome to Astar</h1>
+      </header> -->
+      <img id="logo" style="height: 50%; margin-left: 15%" src="images/microblogLogo (2).svg" alt="" />
     </div>
-
 
     <!-- the other half of the page with everything else -->
     <div class="page-half-B" id="page-half-B">
-        <div class="field-container" id="field-container">
-            <div class="inner-container" id="inner-container-A">
-                    <form action="">
-                        <input id="username" class="input-field" type="text" placeholder="Username">
-                        <input id="password" class="input-field" type="password" placeholder="Password">
-                    </form>
-                    <button class="button" onclick="checkCredentials();">Sign In</button>
+      <div class="field-container" id="field-container">
+        <div class="inner-container" id="inner-container-A">
+          <form action="">
+            <h3 style="font-size: 38px">Weclome To Astar*</h3>
+            <input id="username" class="input-field" type="text" placeholder="Username" />
+            <input id="password" class="input-field" type="password" placeholder="Password" />
+          </form>
+          <button class="button" onclick="checkCredentials();">Sign In</button>
 
-                <div style="width: 100%; height: 0px; border: 2px solid gray;">
-        
-                </div>
-                <p style="font-family: 'Fredoka One', cursive; color: white; font-size: larger; margin: 0px; padding: 0px; margin-top: 1rem;">Don't Have An Account?</p>
-                <a onclick="switchPages();" class="a-button" >Sign Up</a>
-                <h3 style="font-size: 24px;">Astar*</h3>
-            </div>
+          <div style="width: 100%; height: 0px; border: 2px solid gray"></div>
+          <p
+            style="
+              font-family: 'Fredoka One', cursive;
+              color: white;
+              font-size: larger;
+              margin: 0px;
+              padding: 0px;
+              margin-top: 1rem;
+            "
+          >
+            Don't Have An Account?
+          </p>
+          <a onclick="switchPages();" class="a-button">Sign Up</a>
+       
+        </div>
 
+        <div class="inner-container" id="inner-container-B">
+          <div class="inner-container" style="display: flex; flex-direction: row">
+            <table style="width: 100%; height: 100%">
+              <tr>
+                <td style="width: 40%; height: 80%">
+                  <form action="">
+                    <input id="create-username" class="input-field-create" type="text" placeholder="Username" />
+                    <input id="create-password" class="input-field-create" type="password" placeholder="Password" />
+                    <input
+                      id="confirm-password"
+                      class="input-field-create"
+                      type="password"
+                      placeholder="Confirm Password"
+                    />
 
-            <div class="inner-container" id="inner-container-B">
-                <div class="inner-container" style="display: flex; flex-direction: row">
-                    
-                    <table style="width: 100%; height: 100%;">
-                        <tr>
-                            <td style="width: 40%; height: 80%">
-                                
-                                <form action="">
-                                    
-                                    <input id="create-username" class="input-field-create" type="text" placeholder="Username">
-                                    <input id="create-password" class="input-field-create" type="password" placeholder="Password">
-                                    <input id="confirm-password" class="input-field-create" type="password" placeholder="Confirm Password">
-                                
-                                    <input id="phone-number" class="input-field-create" type="text" placeholder="Phone Number (optional)">
-                                    <input id="email-address" class="input-field-create" type="text" placeholder="Email Address">
-                                    <input id="date-of-birth" class="input-field-create" style="width: 100%; font-size: large; color: rgb(105, 105, 105);" type="date">
-                                </form>
-                                <a href="" class="a-button" style="width: 30%; margin-left: 0px;">Cancel</a>
-                            </td>
-                            <td style="height: 100%; display: flex; align-items: flex-end; flex-direction: column;">
+                    <input
+                      id="phone-number"
+                      class="input-field-create"
+                      type="text"
+                      placeholder="Phone Number (optional)"
+                    />
+                    <input id="email-address" class="input-field-create" type="text" placeholder="Email Address" />
+                    <input
+                      id="date-of-birth"
+                      class="input-field-create"
+                      style="width: 100%; font-size: large; color: rgb(105, 105, 105)"
+                      type="date"
+                    />
+                  </form>
+                  <a href="" class="a-button" style="width: 30%; margin-left: 0px">Cancel</a>
+                </td>
+                <td style="height: 100%; display: flex; align-items: flex-end; flex-direction: column">
+                  <!-- terms box, maybe you can find a use? -->
 
-                                <!-- terms box, maybe you can find a use? -->
-                               
-
-                                <!-- the check box, and button to create an account -->
-                                <div style="width: 90%; display: flex; flex-direction: column; align-items: center">
-                                    <div style="margin: 1rem;">
-                                        <input id="terms-consent" type="checkbox">
-                                        <label for="terms-consent">I have read and hereby agree to the terms of service</label>
-                                    </div>
-                                    <button onclick="createAccount();" class="button">Sign Up</button>
-                                </div>
-                                
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            
-        </div> 
+                  <!-- the check box, and button to create an account -->
+                  <div style="width: 90%; display: flex; flex-direction: column; align-items: center">
+                    <div style="margin: 1rem">
+                      <input id="terms-consent" type="checkbox" />
+                      <label for="terms-consent">By checking this checkbox, you herebly agree to the terms of serivce</label>
+                    </div>
+                    <button onclick="createAccount();" class="button">Sign Up</button>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <script src="sign-in.js"></script>
 
-</body>
+    <script src="sign-in.js"></script>
+  </body>
 </html>
