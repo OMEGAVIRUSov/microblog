@@ -124,10 +124,6 @@ function buildPost(post) {
     mediaDiv.appendChild(mediaElemObj.array[currentIndex]);
   }
 
-  console.log(mediaUrls);
-
-  console.log(mediaElemObj.array);
-
   function showMedia(index) {
     mediaDiv.firstChild.replaceWith(mediaElemObj.array[index]);
   }
@@ -401,8 +397,8 @@ function sortByLikes(posts) {
   });
 }
 
-function sortByAlpha(posts) {
-  return posts.sort((a, b) => {
+function sortByAlpha(obj) {
+  return obj.sort((a, b) => {
     return a.username.toUpperCase().localeCompare(b.username.toUpperCase());
   });
 }
@@ -424,6 +420,23 @@ function loadUsernameSelect() {
         usernameSelect.appendChild(option);
       });
     });
+
+    // fetch(`${apiBaseURL}/api/users`, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         console.log(data);
+
+    //       let usernames = new Set(sortByAlpha(data).map((user) => user.username));
+    
+    //       usernames.forEach((user) => {
+    //         let option = new Option(user, user);
+    //         usernameSelect.appendChild(option);
+    //       });
+    //     });
 }
 
 function sortPosts(posts) {
