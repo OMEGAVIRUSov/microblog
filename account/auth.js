@@ -5,6 +5,8 @@
 const apiBaseURL = "http://microbloglite.us-east-2.elasticbeanstalk.com";
 // Backup server:   https://microbloglite.onrender.com
 
+const urlParams = new URLSearchParams(location.search);
+
 // You can use this function to get the login data of the logged-in
 // user (if any). It returns either an object including the username
 // and token, or an empty object if the visitor is not logged in.
@@ -79,10 +81,23 @@ function logout() {
     });
 }
 
-function getUserName() {
-  let userData = getLoginData();
+function getUsernameUrlParam() {
+  let userName = null;
+  if (urlParams.has("username")) {
+    userName = urlParams.get("username");
+  }
+  return userName;
+}
 
-  return userData.username;
+function getUserName() {
+  let userName;
+
+  if(getUsernameUrlParam()) {
+    userName = getUsernameUrlParam();
+  } else {
+    userName = getLoginData().username;
+  }
+  return userName;
 }
 
 function getToken() {
