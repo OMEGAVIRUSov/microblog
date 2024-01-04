@@ -25,8 +25,13 @@ function buildPost(post) {
 
   const profileIcon = document.createElement("img");
   profileIcon.addEventListener("click", function () {
-    window.location.href = "/profile.html"
+    if(getUserName() == post.username) {
+        window.location.href = `/profile.html`;
+    } else {
+        window.location.href = `/profile.html?username=${post.username}`;
+    }
   });
+
 
   infoDiv.className = "info-div";
   likesDiv.className = "likes-container";
@@ -37,6 +42,15 @@ function buildPost(post) {
   postDiv.appendChild(profileIcon);
 
   usernameH4.innerText = `@${post.username}:`;
+  usernameH4.addEventListener("click", function () {
+    if(getUserName() == post.username) {
+        window.location.href = `/profile.html`;
+    } else {
+        window.location.href = `/profile.html?username=${post.username}`;
+    }
+  });
+
+
   textP.innerText = post.text;
   textP.className = "post-text";
   timeP.innerText = new Date(post.createdAt).toLocaleString();
@@ -507,3 +521,6 @@ function isImage(url) {
   const imageExtensions = [".jpg", ".png", ".gif"];
   return imageExtensions.some((ext) => url.includes(ext));
 }
+
+
+

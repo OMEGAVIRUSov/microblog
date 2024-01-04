@@ -33,6 +33,7 @@ function init() {
   // functions
   function getUserInfoToDisplay() {
     const userName = getUserName();
+
     const token = getToken();
 
     fetch(`${apiBaseURL}/api/users/${userName}`, {
