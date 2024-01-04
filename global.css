@@ -27,6 +27,8 @@
 .main {
     overflow: hidden;
     width: 100%;
+    display: flex;
+    justify-content: space-evenly;
   }
   
   .main::-webkit-scrollbar {
@@ -38,7 +40,6 @@
     width: 60%;
     border-radius: 25px;
     
-    border: 2px solid #b7b7b7;
     margin: 0.5rem;
     background-color: white;
     padding: 0.5rem;
@@ -57,6 +58,11 @@
     border-left: 1px solid white;
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+
+  .user-posts-container::-webkit-scrollbar {
+    width: 0px;
+    background-color: transparent;
   }
   
   .likes-button {
@@ -80,7 +86,7 @@
   
   
   .info-div {
-  width: 80%;
+  width: 100%;
   margin: 2rem;
   white-space: nowrap;
   overflow: hidden;
@@ -90,21 +96,19 @@
   
   .likes-container {
     width: auto;
-    height: 9rem;
-    max-height: 13rem;
+    height: auto;
+    margin-top: auto;
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid #85989aff;
     border-radius: 20px;
     }
   
   .likes-inner-container {
     width: 50%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    
     }
   
     .likes-inner-container-header {
@@ -124,7 +128,12 @@
   
   .likes-amount {
   width: 100%;
-  text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  margin: 0px;
   }
   
   .likes-select {
@@ -136,18 +145,21 @@
   
   
   .nav-bar {
-  width: 5%;
+  width: 100%;
+  height: 6rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 1.5rem;
   background-color: #85989a;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   }
   
   .nav-icon {
   display: flex;
+  width: 5%;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
   }
   
   .nav-icon:hover {
@@ -197,4 +209,100 @@
 
     .multi-media-div {
       display: flex;
+    }
+
+    .central-column {
+      width: 60%;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      background-color: #e4e9e9;
+    }
+
+    .side-column {
+      width: 20%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .side-box {
+      width: 90%;
+      height: 30rem;
+      border-radius: 25px;
+      border: 2px solid#85989a;
+      margin-top: 2%;
+    }
+
+
+
+
+
+
+
+
+
+    .create-post-modal {
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100vh;
+      margin: 0px;
+      padding: 0px;
+      position: absolute;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .create-post-container {
+      width: 40%;
+      height: 50%;
+      background-color: white;
+      border-radius: 40px;
+      border: 2px solid gray;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .create-title {
+      width: 100%;
+      height: auto;
+      text-align: center;
+    }
+
+    .create-textarea {
+      margin: 2rem;
+      width: 80%;
+      height: 50%;
+    }
+
+    .button-container {
+      width: 100%;
+      height: auto;
+    }
+
+
+    #edit-form {
+      display: flex;
+      flex-direction: column;
+      width: 20%;
+    }
+
+
+    .generic-button {
+      width: 80%;
+      height: 3rem;
+      border-radius: 200px;
+      color: white;
+      border: none;
+      background: linear-gradient(#a8b7b8, #ccd4d5);
+      font-weight: bold;
+      font-size: large;
+      margin: 1rem;
+    }
+
+    .generic-button:hover {
+      background: linear-gradient(#ccd4d5, #85989a);
     }
