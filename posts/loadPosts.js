@@ -38,6 +38,7 @@ function buildPost(post) {
   postDiv.appendChild(profileIcon);
 
   usernameH4.innerText = `@${post.username}:`;
+  usernameH4.className = "clickable-text";
   usernameH4.addEventListener("click", function () {
     if (getUserName() == post.username) {
       window.location.href = `/profile.html`;
