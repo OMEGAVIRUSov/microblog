@@ -34,15 +34,16 @@
       
       <div class="side-column">
         <div id="left-box" class="side-box">
-        <table>
+        <table style="width: 100%; display: flex; flex-direction: column; align-items: center;">
           <thead>
             <tr>
               <th>
-                Users
+                <h3>Users</h3>
+                
               </th>
             </tr>
           </thead>
-          <tbody id="username-table-body">
+          <tbody id="username-table-body" style="width: 80%;">
           </tbody>
         </table>
       </div>
@@ -58,24 +59,29 @@
       </div>
 
       <div class="side-column">
-        <div id="right-box" class="side-box">
-          <label for="sort-by-form">Sort By</label>
-          <form style="display: flex; flex-direction: column;" id="sort-by-form">
-            <label for="sort-by-newest-radio">
-              <input id="sort-by-newest-radio" type="radio" name="sort-by-radio" value="newest" checked> Newest
-            </label>
-          
-            <label for="sort-by-oldest-radio">
-              <input for="sort-by-oldest-radio" type="radio" name="sort-by-radio" value="oldest"> Oldest
-            </label>
-          
-            <label for="sort-by-most-likes-radio">
-              <input id="sort-by-most-likes-radio" type="radio" name="sort-by-radio" value="most-likes"> Most Liked
-            </label>
-          
-            <label for="sort-by-username-radio">
-              <input for="sort-by-username-radio" type="radio" name="sort-by-radio" value="username"> Username
-            </label>
+        <div id="right-box" class="side-box" style="height: auto;">
+          <label style="display: flex; justify-content: center;" for="sort-by-form"><h3>Sort By</h3></label>
+          <form style="display: flex; flex-direction: column; width: 100%; align-items: center;" id="sort-by-form">
+            <div class="side-radio-button">
+              <label class="side-radio-button-label" for="sort-by-newest-radio">
+                <input id="sort-by-newest-radio" type="radio" name="sort-by-radio" value="newest" checked> Newest
+              </label>
+            </div>
+            <div class="side-radio-button">
+              <label class="side-radio-button-label" for="sort-by-oldest-radio">
+                <input for="sort-by-oldest-radio" type="radio" name="sort-by-radio" value="oldest"> Oldest
+              </label>
+            </div>
+            <div class="side-radio-button">
+              <label class="side-radio-button-label" for="sort-by-most-likes-radio">
+                <input id="sort-by-most-likes-radio" type="radio" name="sort-by-radio" value="most-likes"> Most Liked
+              </label>
+            </div>
+            <div class="side-radio-button">
+              <label class="side-radio-button-label" for="sort-by-username-radio">
+                <input for="sort-by-username-radio" type="radio" name="sort-by-radio" value="username"> Username
+              </label>
+            </div>
           </form>
           
           </select>
