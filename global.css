@@ -152,7 +152,8 @@
   
   .nav-icon {
   display: flex;
-  width: 5%;
+  width: 3.5%;
+  margin: 1rem;
   justify-content: center;
   align-items: center;
   }
@@ -228,8 +229,14 @@
       border-radius: 25px;
       border: 2px solid#85989a;
       margin-top: 2%;
+      overflow-y: scroll;
+      padding-bottom: 2rem;
     }
 
+    .side-box::-webkit-scrollbar {
+      width: 0px;
+      background-color: transparent;
+    }
 
 
 
@@ -300,4 +307,37 @@
 
     .generic-button:hover {
       background: linear-gradient(#ccd4d5, #85989a);
+    }
+
+    .small-generic-button {
+      width: 45%;
+      height: 2rem;
+      border-radius: 200px;
+      color: white;
+      border: none;
+      background: linear-gradient(#a8b7b8, #ccd4d5);
+      font-weight: bold;
+      font-size: medium;
+      margin: 0.25rem;
+    }
+
+    .small-generic-button:hover {
+      background: linear-gradient(#ccd4d5, #85989a);
+    }
+
+    .side-radio-button {
+      width: 50%;
+      height: 2rem;
+      margin: 0.25rem;
+      border-radius: 200px;
+      border: none;
+      background: linear-gradient(#a8b7b8, #ccd4d5);
+      color: white;
+      display: flex;
+      align-items: center;
+    }
+
+    .side-radio-button-label {
+      font-size: larger;
+      font-weight: 600;
     }

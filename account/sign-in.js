@@ -73,13 +73,23 @@ function switchPages() {
 
 //this is where the logic for logging in will go
 function checkCredentials() {
-
-    //get the values from the page
-    let username = document.querySelector("#username").value;
-    let password = document.querySelector("#password").value;
-
-
     
+    try {
+         const loginData = {
+        username: document.querySelector("#username").value,
+        password: document.querySelector("#password").value,
+    }
+
+
+    // Disables the button after the form has been submitted already:
+
+    // Time to actually process the login using the function from auth.js!
+    login(loginData);
+    } catch {
+        //do nothing
+    }
+    // We can use loginForm.username (for example) to access
+    // the input element in the form which has the ID of "username".
 
     //add the additional logic here
 };
@@ -87,17 +97,45 @@ function checkCredentials() {
 
 //this is where the logic for creating an account will go
 function createAccount() {
-
-    //get the values from the page
-    let newUsername = document.querySelector("#create-username").value;
-    let newPassword = document.querySelector("#create-password").value;
-    let confirmedPassword = document.querySelector("#confirm-password").value;
-    let displayName = document.querySelector("#display-name").value;
-    let dateOfBirth = document.querySelector("#date-of-birth").value;
-    let phoneNumber = document.querySelector("#phone-number").value;         
-    let emailAddress = document.querySelector("#email-address").value;
-    let termsConsent  = document.querySelector("#terms-consent");
-
     
+
+    const nameInput = document.querySelector("#create-name");
+    const userNameInput = document.querySelector("#create-username");
+    const passwordInput = document.querySelector("#create-password");
+
+    function buildUser() {
+      let user = {
+        username: userNameInput.value,
+        fullName: nameInput.value,
+        password: passwordInput.value,
+      };
+
+      return user;
+    }
+
+    async function saveUser(user) {
+      fetch(apiBaseURL + "/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          //can set multiple headers here
+        },
+        body: JSON.stringify(user),
+      }).then((response) => {
+        window.location.href = "sign-in.html";
+      });
+    }
+
+    async function createUser() {
+      let user = buildUser();
+
+      saveUser(user);
+
+      return false;
+    }
+
+    document.querySelector("#register-button").addEventListener("click", createUser);
     //add the additional logic here
 }; 
+
+window.onload = createAccount

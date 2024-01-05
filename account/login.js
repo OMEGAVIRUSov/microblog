@@ -1,8 +1,8 @@
 /* Landing Page JavaScript */
 
 "use strict";
-
-const loginForm = document.querySelector("#login");
+window.location.href = "/account/sign-in.html"
+/* const loginForm = document.querySelector("#login");
 
 loginForm.onsubmit = function (event) {
     // Prevent the form from refreshing the page,
@@ -22,3 +22,4 @@ loginForm.onsubmit = function (event) {
     // Time to actually process the login using the function from auth.js!
     login(loginData);
 };
+ */

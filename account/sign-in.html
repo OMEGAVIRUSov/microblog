@@ -19,6 +19,13 @@
     <title>Astar</title>
 
     <link rel="stylesheet" href="sign-in.css" />
+
+    <script src="auth.js"></script>
+    <script>
+      if (isLoggedIn() === true) {
+        window.location.replace("/posts/posts.html");
+      }
+    </script>
   </head>
   <body>
     <!--Header -->
@@ -67,41 +74,30 @@
               <tr>
                 <td style="width: 40%; height: 80%">
                   <form action="">
+                    <h1>Enter Your Information Below</h1>
+                    <input id="create-name" class="input-field-create" type="text" placeholder="Name" />
                     <input id="create-username" class="input-field-create" type="text" placeholder="Username" />
                     <input id="create-password" class="input-field-create" type="password" placeholder="Password" />
-                    <input
-                      id="confirm-password"
-                      class="input-field-create"
-                      type="password"
-                      placeholder="Confirm Password"
-                    />
+                    
 
-                    <input
-                      id="phone-number"
-                      class="input-field-create"
-                      type="text"
-                      placeholder="Phone Number (optional)"
-                    />
-                    <input id="email-address" class="input-field-create" type="text" placeholder="Email Address" />
-                    <input
-                      id="date-of-birth"
-                      class="input-field-create"
-                      style="width: 100%; font-size: large; color: rgb(105, 105, 105)"
-                      type="date"
-                    />
+               
+                    
                   </form>
-                  <a href="" class="a-button" style="width: 30%; margin-left: 0px">Cancel</a>
+                  <div style="display: flex; justify-content: space-between">
+                    <a href="" class="a-button" style="margin: 0px; width: 25%;">Cancel</a>
+                    <button onclick="createAccount();" style="margin: 0px; width: 65%;" class="button" id="register-button">Sign Up</button>
+                  </div>
+                 
                 </td>
-                <td style="height: 100%; display: flex; align-items: flex-end; flex-direction: column">
+                <td style="height: 100%; display: flex; justify-content: center; align-items: flex-end; flex-direction: column">
                   <!-- terms box, maybe you can find a use? -->
 
                   <!-- the check box, and button to create an account -->
-                  <div style="width: 90%; display: flex; flex-direction: column; align-items: center">
-                    <div style="margin: 1rem">
-                      <input id="terms-consent" type="checkbox" />
-                      <label for="terms-consent">By checking this checkbox, you herebly agree to the terms of serivce</label>
-                    </div>
-                    <button onclick="createAccount();" class="button">Sign Up</button>
+                  <div style="width: 90%; display: flex; flex-direction: column; align-items: center; ">
+                    
+                      <img id="logo" style="height: 50%; margin-left: 15%; height: 25rem;" src="images/microblogLogo (2).svg" alt="" />
+
+                    
                   </div>
                 </td>
               </tr>

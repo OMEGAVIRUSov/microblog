@@ -29,10 +29,12 @@ function init() {
           const tr = document.createElement("tr");
           const td = document.createElement("td");
 
-          td.textContent = `${user}`;
+          td.textContent = `@${user}`;
+          td.id = `${user}`;
+          tr.className = "username-list-style"
 
           td.addEventListener("click", () => {
-            window.location.href = `/profile.html?username=${td.textContent}`;
+            window.location.href = `/profile.html?username=${td.id}`;
           });
 
 

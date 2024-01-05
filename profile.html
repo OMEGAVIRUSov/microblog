@@ -156,7 +156,7 @@
     <script src="../account/auth.js"></script>
     <script>
       if (isLoggedIn() === false) {
-        window.location.replace("../account/login.html");
+        window.location.replace("../account/sign-in.html");
       }
     </script>
   </head>
@@ -206,9 +206,9 @@
       <div class="create-post-container">
         <h3>Whats On Your Mind...?</h3>
         <textarea class="create-textarea" name="new-post" id="new-post-textarea" cols="30" rows="10" placeholder="Type Here..."></textarea>
-        <div>
-          <button id="cancel-post-button">Cancel</button>
-          <button id="create-post-button">Post</button>
+        <div style="display: flex; width: 50%">
+          <button class="generic-button" id="cancel-post-button">Cancel</button>
+          <button class="generic-button" id="create-post-button">Post</button>
         </div>
         
       </div>
@@ -219,7 +219,7 @@
       <div class="create-post-container" style="width: 25%;">
         <h3>Update Your Info</h3>
         <div id="edit-user-info-div" style="width: 90%">
-          <form id="edit-form" style="width: 50%;">
+          <form id="edit-form" style="width: 70%;">
             <label for="username-display-p">Username:</label>
             <p id="username-display-p"></p>
 
@@ -232,9 +232,9 @@
             <label for="password-input">Enter Password:</label>
             <input type="password" id="password-input">
 
-            <div style="margin-top: 1rem;">
-              <button id="cancel-edit-button">Cancel</button>
-              <button id="save-user-info-button" type="button">Save Changes</button>
+            <div style="margin-top: 1rem; width: 100%">
+              <button class="small-generic-button" id="cancel-edit-button">Cancel</button>
+              <button class="small-generic-button" id="save-user-info-button" type="button">Save Changes</button>
             </div>
             
           </form>

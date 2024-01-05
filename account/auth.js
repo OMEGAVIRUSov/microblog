@@ -44,7 +44,7 @@ function login(loginData) {
     .then((loginData) => {
       window.localStorage.setItem("login-data", JSON.stringify(loginData));
       window.location.assign("../posts/posts.html"); // redirect
-
+      console.log(loginData)
       return loginData;
     });
 }
