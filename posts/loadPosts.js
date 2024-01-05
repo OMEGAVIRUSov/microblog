@@ -180,7 +180,7 @@ function buildPost(post) {
       let option = new Option(like.username, like.username);
       likesSelect.appendChild(option);
 
-      if (getUserName() == like.username) {
+      if (getLoginData().username == like.username) {
         wasIn = true;
       }
 
@@ -336,7 +336,7 @@ function removeLikePost(removeLikeBtn) {
     .then((data) => {
       console.log(data);
       for (let like of data.likes) {
-        if (like.username == getUserName()) {
+        if (like.username == getLoginData().username) {
           deleteLike(like._id);
         }
       }
