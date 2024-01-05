@@ -3,8 +3,6 @@ const postsDiv = document.querySelector("#posts-div");
 const sortBySelect = document.querySelector("#sort-by-select");
 const sortByForm = document.querySelector("#sort-by-form");
 
-const usernameSelect = document.querySelector("#username-select");
-
 function buildPost(post) {
   const postDiv = document.createElement("div");
   const infoDiv = document.createElement("div");
@@ -395,42 +393,6 @@ function sortByAlpha(obj) {
   });
 }
 
-function loadUsernameSelect() {
-  const token = getToken();
-
-  fetch(`${apiBaseURL}/api/posts`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      let usernames = new Set(sortByAlpha(data).map((post) => post.username));
-
-      usernames.forEach((user) => {
-        let option = new Option(user, user);
-        usernameSelect.appendChild(option);
-      });
-    });
-
-  // fetch(`${apiBaseURL}/api/users`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //         console.log(data);
-
-  //       let usernames = new Set(sortByAlpha(data).map((user) => user.username));
-
-  //       usernames.forEach((user) => {
-  //         let option = new Option(user, user);
-  //         usernameSelect.appendChild(option);
-  //       });
-  //     });
-}
-
 function sortPosts(posts) {
   let value = "";
 
@@ -467,15 +429,12 @@ function sortPosts(posts) {
 }
 
 function refinePosts(posts) {
-  let userName;
-  if (usernameSelect && usernameSelect.value == "all") {
-    return posts;
-  } else if (usernameSelect) {
-    userName = usernameSelect.value;
+  if (getUsernameUrlParam()) {
+    return posts.filter((post) => post.username == getUserName());
   } else {
-    userName = getUserName();
+    return posts;
   }
-  return posts.filter((post) => post.username == userName);
+  
 }
 
 function getMediaElem(url) {
@@ -500,7 +459,7 @@ function getMediaElem(url) {
     video.src = url;
     video.className = "post-image";
 
-    return videoElement;
+    return video;
   } else if (isImage(url)) {
     // Handle image
     //   } else {
