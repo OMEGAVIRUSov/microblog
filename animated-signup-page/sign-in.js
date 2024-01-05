@@ -79,6 +79,8 @@ function checkCredentials() {
     let password = document.querySelector("#password").value;
 
 
+    
+
     //add the additional logic here
 };
 
