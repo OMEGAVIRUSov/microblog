@@ -138,11 +138,11 @@ function init() {
 
   function togglePostandEditButtons() {
     if (getUsernameUrlParam()) {
-      showNewPostButton.style.display = "block";
-      editButton.style.display = "block";
-    } else {
       showNewPostButton.style.display = "none";
       editButton.style.display = "none";
+    } else {
+      showNewPostButton.style.display = "block";
+      editButton.style.display = "block";
     }
   }
 
