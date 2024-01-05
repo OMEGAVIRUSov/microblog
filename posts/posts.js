@@ -15,7 +15,7 @@ function init() {
 
   //event listeners
   logOutButton.addEventListener("click", logout);
-  sortBySelect.addEventListener("change", loadPosts);
+  sortByForm.addEventListener("change", loadPosts);
   usernameSelect.addEventListener("change", loadPosts);
 
   //call functions onload
