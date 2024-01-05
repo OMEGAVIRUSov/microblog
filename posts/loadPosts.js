@@ -209,7 +209,7 @@ function buildPost(post) {
     likesInnerContainerC.appendChild(likesInnerContainerB);
   }
 
-  if (post.username == getUserName() && !getUsernameUrlParam()) {
+  if (post.username == getLoginData().username || getUsernameUrlParam() == getLoginData().username) {
     const deletePostButton = document.createElement("button");
     const deletePostIcon = document.createElement("img");
 
@@ -430,6 +430,8 @@ function sortPosts(posts) {
 
 function refinePosts(posts) {
   if (getUsernameUrlParam()) {
+    return posts.filter((post) => post.username == getUserName());
+  } else if(getLoginData().username == getUserName() && sortBySelect) {
     return posts.filter((post) => post.username == getUserName());
   } else {
     return posts;
