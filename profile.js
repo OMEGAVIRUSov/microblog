@@ -42,6 +42,14 @@ function init() {
         console.log(data);
         displayUserInfo(data);
       });
+
+
+      let username = getLoginData();
+      if (userName !=username.username) {
+        const editDetails  = document.querySelector("#edit-button");
+        editDetails.style.display = "none";
+      } 
+
   }
 
   function displayUserInfo(user) {
@@ -51,7 +59,7 @@ function init() {
   }
 
 
-
+ 
   
   //edit user information functions
   function populateEditForm(user) {
@@ -129,10 +137,12 @@ function init() {
       });
   }
 
+
   //function calls for window onload
   getUserInfoToDisplay();
   loadPosts();
 
+  
   //add event listeners
   logOutButton.addEventListener("click", logout);
   
