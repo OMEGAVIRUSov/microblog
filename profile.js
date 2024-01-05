@@ -9,7 +9,7 @@ function init() {
 
   const postsDiv = document.querySelector("#posts-div");
 
-
+  const showNewPostButton = document.querySelector("#show-new-post-button");
 
   const editButton = document.querySelector("#edit-button");
   const cancelEditButton = document.querySelector("#cancel-edit-button");
@@ -22,7 +22,6 @@ function init() {
   const passwordInput = document.querySelector("#password-input");
 
   const sortBySelect = document.querySelector("#sort-by-select");
-
 
   const editAccountDetailsModal = document.querySelector("#edit-account-details");
 
@@ -59,7 +58,7 @@ function init() {
   }
 
 
- 
+
   
   //edit user information functions
   function populateEditForm(user) {
@@ -137,17 +136,25 @@ function init() {
       });
   }
 
+  function togglePostandEditButtons() {
+    if (getUsernameUrlParam()) {
+      showNewPostButton.style.display = "none";
+      editButton.style.display = "none";
+    } else {
+      showNewPostButton.style.display = "block";
+      editButton.style.display = "block";
+    }
+  }
 
   //function calls for window onload
+  togglePostandEditButtons();
   getUserInfoToDisplay();
   loadPosts();
 
   
   //add event listeners
   logOutButton.addEventListener("click", logout);
-  
-  
-  
+
   saveUserInfoButton.addEventListener("click", updateUser);
   editButton.addEventListener("click", showEditUserInfo);
   cancelEditButton.addEventListener("click", hideEditUserInfo);

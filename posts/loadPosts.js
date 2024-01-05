@@ -1,9 +1,9 @@
 const postsDiv = document.querySelector("#posts-div");
 
 const sortBySelect = document.querySelector("#sort-by-select");
+const sortByForm = document.querySelector("#sort-by-form");
+
 const usernameSelect = document.querySelector("#username-select");
-
-
 
 function buildPost(post) {
   const postDiv = document.createElement("div");
@@ -18,20 +18,18 @@ function buildPost(post) {
   const timeP = document.createElement("p");
   const likeButton = document.createElement("button");
   const removeLikeButton = document.createElement("button");
-  
 
   const likeButtonImg = document.createElement("img");
   const unlikeButtonImg = document.createElement("img");
 
   const profileIcon = document.createElement("img");
   profileIcon.addEventListener("click", function () {
-    if(getUserName() == post.username) {
-        window.location.href = `/profile.html`;
+    if (getUserName() == post.username) {
+      window.location.href = `/profile.html`;
     } else {
-        window.location.href = `/profile.html?username=${post.username}`;
+      window.location.href = `/profile.html?username=${post.username}`;
     }
   });
-
 
   infoDiv.className = "info-div";
   likesDiv.className = "likes-container";
@@ -43,13 +41,12 @@ function buildPost(post) {
 
   usernameH4.innerText = `@${post.username}:`;
   usernameH4.addEventListener("click", function () {
-    if(getUserName() == post.username) {
-        window.location.href = `/profile.html`;
+    if (getUserName() == post.username) {
+      window.location.href = `/profile.html`;
     } else {
-        window.location.href = `/profile.html?username=${post.username}`;
+      window.location.href = `/profile.html?username=${post.username}`;
     }
   });
-
 
   textP.innerText = post.text;
   textP.className = "post-text";
@@ -124,10 +121,6 @@ function buildPost(post) {
     mediaDiv.appendChild(mediaElemObj.array[currentIndex]);
   }
 
-  console.log(mediaUrls);
-
-  console.log(mediaElemObj.array);
-
   function showMedia(index) {
     mediaDiv.firstChild.replaceWith(mediaElemObj.array[index]);
   }
@@ -172,8 +165,6 @@ function buildPost(post) {
   likesInnerContainerC.className = "likes-inner-container-header";
   likesInnerContainerD.className = "likes-inner-container-footer";
 
- 
-
   if (post.likes && post.likes.length > 0) {
     let wasIn = false;
     const likesP = document.createElement("p");
@@ -191,7 +182,7 @@ function buildPost(post) {
       let option = new Option(like.username, like.username);
       likesSelect.appendChild(option);
 
-      if (getUserName() == like.username) {  
+      if (getUserName() == like.username) {
         wasIn = true;
       }
 
@@ -202,7 +193,6 @@ function buildPost(post) {
       }
     }
 
-    
     likesInnerContainerB.appendChild(likesP);
     likesInnerContainerD.appendChild(likesSelect);
   }
@@ -221,7 +211,7 @@ function buildPost(post) {
     likesInnerContainerC.appendChild(likesInnerContainerB);
   }
 
-  if (post.username == getUserName()) {
+  if (post.username == getUserName() && !getUsernameUrlParam()) {
     const deletePostButton = document.createElement("button");
     const deletePostIcon = document.createElement("img");
 
@@ -317,7 +307,6 @@ function likePost(likeBtn) {
       console.log(data);
       updatePage(postID);
     });
-
 }
 
 function removeLikePost(removeLikeBtn) {
@@ -354,7 +343,6 @@ function removeLikePost(removeLikeBtn) {
         }
       }
     });
-
 }
 
 function deletePost(deleteButton) {
@@ -401,8 +389,8 @@ function sortByLikes(posts) {
   });
 }
 
-function sortByAlpha(posts) {
-  return posts.sort((a, b) => {
+function sortByAlpha(obj) {
+  return obj.sort((a, b) => {
     return a.username.toUpperCase().localeCompare(b.username.toUpperCase());
   });
 }
@@ -424,10 +412,34 @@ function loadUsernameSelect() {
         usernameSelect.appendChild(option);
       });
     });
+
+  // fetch(`${apiBaseURL}/api/users`, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //         console.log(data);
+
+  //       let usernames = new Set(sortByAlpha(data).map((user) => user.username));
+
+  //       usernames.forEach((user) => {
+  //         let option = new Option(user, user);
+  //         usernameSelect.appendChild(option);
+  //       });
+  //     });
 }
 
 function sortPosts(posts) {
-  switch (sortBySelect.value) {
+  let value = "";
+
+  if (sortByForm) {
+    value = sortByForm.querySelector('input[name="sort-by-radio"]:checked').value;
+  } else if (sortBySelect) {
+    value = sortBySelect.value;
+  }
+  switch (value) {
     case "":
       for (let post of posts) {
         displayPost(post);
@@ -521,6 +533,3 @@ function isImage(url) {
   const imageExtensions = [".jpg", ".png", ".gif"];
   return imageExtensions.some((ext) => url.includes(ext));
 }
-
-
-

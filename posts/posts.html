@@ -33,14 +33,7 @@
     <main class="main">
       
       <div class="side-column">
-        <div class="side-box">
-        <select name="sort-by" id="sort-by-select">
-          <option value="">Sort by...</option>
-          <option value="newest">Newest</option>
-          <option value="oldest">Oldest</option>
-          <option value="most-likes">Most Liked</option>
-          <option value="username">Username</option>
-        </select>
+        <div id="left-box" class="side-box">
         <select name="usernames" id="username-select">
           <option value="all">All Users...</option>
         </select>
@@ -57,7 +50,27 @@
       </div>
 
       <div class="side-column">
-        <div class="side-box">
+        <div id="right-box" class="side-box">
+          <label for="sort-by-form">Sort By</label>
+          <form style="display: flex; flex-direction: column;" id="sort-by-form">
+            <label for="sort-by-newest-radio">
+              <input id="sort-by-newest-radio" type="radio" name="sort-by-radio" value="newest" checked> Newest
+            </label>
+          
+            <label for="sort-by-oldest-radio">
+              <input for="sort-by-oldest-radio" type="radio" name="sort-by-radio" value="oldest"> Oldest
+            </label>
+          
+            <label for="sort-by-most-likes-radio">
+              <input id="sort-by-most-likes-radio" type="radio" name="sort-by-radio" value="most-likes"> Most Liked
+            </label>
+          
+            <label for="sort-by-username-radio">
+              <input for="sort-by-username-radio" type="radio" name="sort-by-radio" value="username"> Username
+            </label>
+          </form>
+          
+          </select>
         </div>
         <button class="generic-button" id="show-new-post-button">Create Post</button>
 
