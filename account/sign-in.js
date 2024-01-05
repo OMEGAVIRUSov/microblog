@@ -1,5 +1,4 @@
-let cookieExpiration = new Date();
-cookieExpiration.setFullYear(cookieExpiration.getFullYear() + 1);
+
 //as of right now, this script works exactly how I want. if you wanna try and make it more efficient, be my guest
 
 
