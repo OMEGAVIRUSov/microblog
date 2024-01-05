@@ -38,6 +38,7 @@ function buildPost(post) {
   postDiv.appendChild(profileIcon);
 
   usernameH4.innerText = `@${post.username}:`;
+  usernameH4.className = "clickable-text";
   usernameH4.addEventListener("click", function () {
     if (getUserName() == post.username) {
       window.location.href = `/profile.html`;
@@ -209,7 +210,7 @@ function buildPost(post) {
     likesInnerContainerC.appendChild(likesInnerContainerB);
   }
 
-  if (post.username == getUserName() && !getUsernameUrlParam()) {
+  if (post.username == getLoginData().username || getUsernameUrlParam() == getLoginData().username) {
     const deletePostButton = document.createElement("button");
     const deletePostIcon = document.createElement("img");
 
@@ -430,6 +431,8 @@ function sortPosts(posts) {
 
 function refinePosts(posts) {
   if (getUsernameUrlParam()) {
+    return posts.filter((post) => post.username == getUserName());
+  } else if(getLoginData().username == getUserName() && sortBySelect) {
     return posts.filter((post) => post.username == getUserName());
   } else {
     return posts;

@@ -77,6 +77,7 @@
   .post-profile-icon {
   height: 4rem;
   margin-left: 1.5rem;
+  cursor: pointer;
   }
   
   
@@ -340,4 +341,9 @@
     .side-radio-button-label {
       font-size: larger;
       font-weight: 600;
+    }
+
+    .clickable-text {
+      cursor: pointer;
+      width: auto;
     }
