@@ -41,6 +41,14 @@ function init() {
         console.log(data);
         displayUserInfo(data);
       });
+
+
+      let username = getLoginData();
+      if (userName !=username.username) {
+        const editDetails  = document.querySelector("#edit-button");
+        editDetails.style.display = "none";
+      } 
+
   }
 
   function displayUserInfo(user) {
@@ -49,6 +57,9 @@ function init() {
     bioP.innerText = user.bio;
   }
 
+
+
+  
   //edit user information functions
   function populateEditForm(user) {
     usernameDisplayP.innerText = user.username;
@@ -140,6 +151,7 @@ function init() {
   getUserInfoToDisplay();
   loadPosts();
 
+  
   //add event listeners
   logOutButton.addEventListener("click", logout);
 

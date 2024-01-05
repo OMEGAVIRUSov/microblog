@@ -12,8 +12,8 @@
         margin: 0px;
         padding: 0px;
         display: flex;
-        justify-content: center;
         background-color: #e4e9e9;
+        flex-direction: column;
         overflow-y: hidden;
         font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: large;
@@ -29,7 +29,8 @@
         height: 100%;
         margin: 0px;
         padding: 0px;
-        overflow-y: scroll;
+        display: flex;
+        justify-content: space-evenly;
       }
 
       .main::-webkit-scrollbar {
@@ -43,51 +44,54 @@
         }
 
       .banner {
-        height: 25rem;
-        width: 100%;
-        background-color: gray;
+        height: auto;
+        width: 20%;
+        background-color: #a8b7b8;
         display: flex;
+        flex-direction: column;
         align-items: center;
       }
       .user-info-container {
-        height: auto;
+        height: 95%;
         width: 100%;
         display: flex;
         justify-content: center;
+        overflow-y: scroll;
       }
+
+      .user-info-container::-webkit-scrollbar {
+        background-color: transparent;
+        width: 0px;
+      }
+
       .user-info {
         width: 80%;
         height: auto;
-        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
-
+      
       .pfp {
-        width: 20rem;
-        height: 20rem;
+        width: 90%;
         border: 4px solid black;
         border-radius: 500px;
-        margin-left: 10rem;
         margin-top: 3rem;
       }
 
       #bio {
         width: 90%;
-        height: 70%;
-        border: 2px solid #85989aff;
+        height: auto;
         border-radius: 15px;
-        margin: 1rem;
         background-color: white;
         box-sizing: border-box;
         display: flex;
         justify-content: center;
-        align-items: center;
-        font-size: larger;
+        padding: 0.5rem;
       }
-      #username,
       #fullName {
-        width: 50%;
-        height: 100%;
-        border: 2px solid #85989aff;
+        width: 90%;
+        height: 10%;
         border-radius: 50px;
         margin: 0.5rem;
         text-align: center;
@@ -100,14 +104,13 @@
         padding: 0.5rem;
       }
       #user-info-div {
-        width: 50%;
+        width: 90%;
         height: 100%;
         margin: 1rem;
         text-align: center;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
       }
 
@@ -119,12 +122,26 @@
         padding-bottom: 5rem;
         align-items: center;
         margin: 0px;
-        border-left: 3px solid white;
         overflow-x: hidden;
       }
 
-      
+      .user-posts-container-profile::-webkit-scrollbar {
+        background-color: transparent;
+        width: 0px;
+      }
 
+      
+      .generic-dropdown {
+        width: 20%;
+        height: 3rem;
+        color: black;
+        border-radius: 15px;
+        border: none;
+        background: linear-gradient(#a8b7b8, #ccd4d5);
+        font-weight: bold;
+        font-size: large;
+        margin: 1rem;
+      }
       
 
       
@@ -133,45 +150,6 @@
       }
           
 
-      .create-post-modal {
-        background-color: rgba(0, 0, 0, 0.5);
-        width: 100%;
-        height: 100vh;
-        margin: 0px;
-        padding: 0px;
-        position: absolute;
-        display: none;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .create-post-container {
-        width: 40%;
-        height: 50%;
-        background-color: white;
-        border-radius: 40px;
-        border: 2px solid gray;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-      }
-
-      .create-title {
-        width: 100%;
-        height: auto;
-        text-align: center;
-      }
-
-      .create-textarea {
-        margin: 2rem;
-        width: 80%;
-        height: 50%;
-      }
-
-      .button-container {
-        width: 100%;
-        height: auto;
-      }
     </style>
     
     <!-- Run BEFORE page is finished loading (before window.onload): -->
@@ -184,44 +162,43 @@
   </head>
   <body>
     <header class="nav-bar">
+      <h1 id="username"></h1>
+      <div style="width: 75%;"></div>
       <a class="nav-icon" href="posts\posts.html"><img style="width: 80%;" src="/assets/homeIcon.svg" alt=""></a>
       <a class="nav-icon" id="log-out-button"><img style="width: 80%;" src="/assets/logoutIcon.svg" alt=""></a>
     </header>
     <div class="main">
       <div class="banner">
         <img class="pfp" src="/assets/profileIcon.svg" />
-        <div id="user-info-div">
-          <div style="display: flex; width: 80%; height: auto; margin: 1rem; align-items: center;">
-            <p id="username"></p>
+        <div id="user-info-div">      
             <p id="fullName"></p>
-            <button id="edit-button">Edit Details</button>
-
-          </div>
+            
           
           <p id="bio"></p>
+          <button class="generic-button" style="border: 1px solid #e4e9e9;" id="edit-button">Edit Details</button>
+          <button class="generic-button" style="border: 1px solid #e4e9e9;" id="show-new-post-button">Create Post</button>
 
         </div>
       </div>
-      <div class="user-info-container">
-        <div class="user-info">
+      <div style="width: 80%;">
+        <div class="user-info-container">
           
+          <div class="user-info">
+                      
+            <select class="generic-dropdown" name="sort-by" id="sort-by-select">
+              <option value="">Sort by...</option>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="most-likes">Most Liked</option>
+            </select>
 
-          <button id="show-new-post-button">Create Post</button>
-          
+            <div id="posts-div" class="user-posts-container-profile">
 
-          
-          
-          
-          <select name="sort-by" id="sort-by-select">
-            <option value="">Sort by...</option>
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-            <option value="most-likes">Most Liked</option>
-          </select>
-
-          <div id="posts-div" class="user-posts-container-profile"></div>
+            </div>
+          </div>
         </div>
       </div>
+      
     </div>
 
 
@@ -266,9 +243,10 @@
       </div>
     </div>
 
+    
     <script src="global.js"></script>
     <script src="posts/loadPosts.js"></script>
     <script src="profile.js"></script>
-
+    
   </body>
 </html>
